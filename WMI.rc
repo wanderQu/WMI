@@ -1,0 +1,1160 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\WMI.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\WMI.ico"
+IDR_WMITYPE             ICON    DISCARDABLE     "res\\WMIDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "右键弹出"
+    BEGIN
+        MENUITEM "关闭该窗口",                  IDR_TAB_CLOSE_THIS
+        MENUITEM "关闭其他窗口",                IDR_TAB_CLOSE_OTHER
+        MENUITEM "关闭所有窗口",                IDR_TAB_CLOSE_ALL
+        MENUITEM "刷新",                        IDR_TAB_REFREASH
+    END
+END
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "文件(&F)"
+    BEGIN
+        MENUITEM "新建(&N)\tCtrl+N",            ID_FILE_NEW
+        MENUITEM "打开(&O)...\tCtrl+O",         ID_FILE_OPEN
+        MENUITEM "保存(&S)\tCtrl+S",            ID_FILE_SAVE
+        MENUITEM "另存为(&A)...",               ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "最近文件",                    ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                    ID_APP_EXIT
+    END
+    POPUP "编辑(&E)"
+    BEGIN
+        MENUITEM "撤消(&U)\tCtrl+Z",            ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "剪切(&T)\tCtrl+X",            ID_EDIT_CUT
+        MENUITEM "复制(&C)\tCtrl+C",            ID_EDIT_COPY
+        MENUITEM "粘贴(&P)\tCtrl+V",            ID_EDIT_PASTE
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "关于 WMI(&A)...",             ID_APP_ABOUT
+    END
+END
+
+IDR_DELETE MENU DISCARDABLE 
+BEGIN
+    POPUP "删除list单元格"
+    BEGIN
+        MENUITEM "删除该行",                    IDM_DELETE
+        MENUITEM "取消",                        IDM_CANCEL
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 WMI"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "WMI 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2018",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_PROCUR_CHILDTEXT DIALOGEX 0, 0, 58, 48
+STYLE DS_MODALFRAME | WS_CHILD
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体"
+BEGIN
+    LTEXT           "  采购订单",IDC_ODER,0,0,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  采购明细表",IDC_TRACKING,0,16,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  采购退货单",IDC_RETURN,0,32,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_DISTRIBUT_CHILDTEXT DIALOGEX 0, 0, 60, 50
+STYLE DS_MODALFRAME | WS_CHILD
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体"
+BEGIN
+    LTEXT           "  配送货单",IDC_DISTRIBUT,0,0,60,15,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  配送退货单",IDC_RETURN,0,31,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  配送明细表",IDC_TACKING,0,15,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_WAREHOUSE_CHILDTEXT DIALOGEX 0, 0, 58, 64
+STYLE DS_MODALFRAME | WS_CHILD
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体", 0, 0, 0x1
+BEGIN
+    LTEXT           "  入库单",IDC_GODOWNENTRY,0,0,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  出库单",IDC_EXITLS,0,16,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  库存盘点",IDC_STOCKING,0,32,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  库存调整",IDC_ADJUSTMENT,0,48,58,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_MANAGE_CHILDTEXT DIALOGEX 0, 0, 60, 80
+STYLE DS_MODALFRAME | WS_CHILD
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体", 0, 0, 0x1
+BEGIN
+    LTEXT           "  供应商管理",IDC_SUPPLYMANAGE,0,16,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  客户管理",IDC_CUSMANAGE,0,0,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  商品管理",IDC_GODSMANAGE,0,48,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  仓库管理",IDC_WAREHOUSEMANAGE,0,64,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  员工管理",IDC_Employ,0,32,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_DATA_CHILDTEXT DIALOGEX 0, 0, 54, 96
+STYLE DS_MODALFRAME | WS_CHILD
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体", 0, 0, 0x1
+BEGIN
+    LTEXT           "  收款单",IDC_VOUCHER,0,0,54,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  付款单",IDC_PAYMENT,0,16,54,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  其他支出单",IDC_EXPENDITURE,0,80,54,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  其他收入单",IDC_OTHERINCOME,0,64,54,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  应付账款",IDC_Payable,0,48,54,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  应收账款",IDC_Recvable,0,32,54,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_ASSETS_CHILDTEXT DIALOGEX 0, 0, 76, 128
+STYLE WS_POPUP
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体", 0, 0, 0x1
+BEGIN
+    LTEXT           "  支出报表",IDC_EXPENSE,0,16,76,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  应付账款明细表  ",IDC_SCHEDULEPAY,0,32,76,16,
+                    SS_NOTIFY | SS_CENTERIMAGE
+    LTEXT           "  应收账款明细表",IDC_SCHEDULERECEIVE,0,48,76,16,
+                    SS_NOTIFY | SS_CENTERIMAGE
+    LTEXT           "  客户对账单",IDC_CUSSTATEMENT,0,64,76,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  供应商对账单",IDC_VENDORSTATMENT,0,80,76,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  其他支出明细表",IDC_OTHERINCOME,0,96,76,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  利润表",IDC_INCOMESTATEMENT,0,112,76,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  收入报表",IDC_INCOME,0,0,76,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_SET_CHILDTEXT DIALOGEX 0, 0, 60, 32
+STYLE DS_MODALFRAME | WS_CHILD
+EXSTYLE WS_EX_STATICEDGE
+FONT 15, "宋体"
+BEGIN
+    LTEXT           "  企业信息",IDC_SYSSET,0,0,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    LTEXT           "  操作日志",IDC_OPERATLOG,0,16,60,16,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+END
+
+IDD_TITLE_CHILDTEXT DIALOG DISCARDABLE  0, 0, 58, 32
+STYLE DS_MODALFRAME | WS_CHILD
+FONT 15, "宋体"
+BEGIN
+    CTEXT           "修改密码",IDC_ChangePass,2,2,53,13,SS_NOTIFY | 
+                    SS_CENTERIMAGE
+    CTEXT           "退出",IDC_LOGOUT,1,15,57,13,SS_NOTIFY | SS_CENTERIMAGE
+END
+
+IDD_LOG DIALOGEX 0, 0, 281, 170
+STYLE DS_ABSALIGN | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_STATICEDGE
+FONT 12, "宋体"
+BEGIN
+    CONTROL         220,IDC_STATIC1,"Static",SS_BITMAP,0,0,11,11
+END
+
+IDD_EXTERN_PARENT DIALOGEX 0, 0, 560, 320
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_STATICEDGE
+CAPTION "功能模块"
+FONT 12, "仿宋", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tab1",IDC_TAB1,"SysTabControl32",WS_BORDER,0,0,560,320
+END
+
+IDD_SET_SYS_PARAM DIALOG DISCARDABLE  0, 0, 350, 71
+STYLE DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "系统参数设置"
+FONT 12, "仿宋"
+BEGIN
+    CTEXT           "基础参数",IDC_STATIC,12,5,40,12,SS_CENTERIMAGE
+    CTEXT           "公司名称",IDC_STATIC,34,20,40,20,SS_CENTERIMAGE
+    CTEXT           "公司地址",IDC_STATIC,34,40,40,20,SS_CENTERIMAGE
+    CTEXT           "公司电话",IDC_STATIC,196,20,40,20,SS_CENTERIMAGE
+    CTEXT           "公司邮箱",IDC_STATIC,196,40,40,20,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,78,24,109,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,78,45,109,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,246,24,73,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT4,246,44,73,12,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG_ADD DIALOG DISCARDABLE  0, 0, 399, 228
+STYLE DS_ABSALIGN | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "添加"
+FONT 12, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | 
+                    LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,0,0,399,205
+    PUSHBUTTON      "取消",IDC_BUTTON1,210,210,30,12
+    PUSHBUTTON      "确定",IDC_BUTTON2,160,210,30,12
+END
+
+IDD_TABDLG DIALOG DISCARDABLE  0, 0, 560, 300
+STYLE DS_ABSALIGN | WS_CHILD
+FONT 12, "System"
+BEGIN
+END
+
+IDD_CHANGEPASS DIALOG DISCARDABLE  0, 0, 143, 92
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
+    WS_CAPTION
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "确认",IDOK,4,74,50,14
+    PUSHBUTTON      "取消",IDCANCEL,84,74,50,14
+    EDITTEXT        IDC_EDIT1,39,4,95,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,39,26,95,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,39,47,95,12,ES_AUTOHSCROLL
+    CTEXT           "旧密码",IDC_STATIC,4,4,36,14,SS_CENTERIMAGE
+    CTEXT           "新密码",IDC_STATIC,4,26,36,14,SS_CENTERIMAGE
+    CTEXT           "确认密码",IDC_STATIC,4,47,36,14,SS_CENTERIMAGE
+    CTEXT           "Static",IDC_STATIC1,4,61,130,12,SS_CENTERIMAGE
+END
+
+IDD_ADD_ORDER DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增采购订单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "商品编号",IDC_STATIC,9,6,37,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,37,480,192
+    COMBOBOX        IDC_COMBO1,53,6,77,78,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,414,6,50,14
+    CTEXT           "数量",IDC_STATIC,153,6,23,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,187,6,55,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,180,237,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,241,237,50,14
+END
+
+IDD_ADD_DISTRI DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增配送订单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "客户编号",IDC_STATIC,6,6,34,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,37,480,196
+    COMBOBOX        IDC_COMBO1,53,6,78,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,429,6,39,14
+    CTEXT           "数量",IDC_STATIC,307,6,23,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,339,6,65,13,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,167,242,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,227,241,50,14
+    CTEXT           "商品编号",IDC_STATIC,155,6,33,13,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO2,193,6,77,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_ADD_WAREIN DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增入库单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "商品编号",IDC_STATIC,7,6,40,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,25,480,207
+    COMBOBOX        IDC_COMBO1,53,6,80,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,426,6,42,14
+    CTEXT           "数量",IDC_STATIC,159,6,23,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,196,6,55,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,192,238,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,251,239,50,14
+END
+
+IDD_ADD_OTHERIN DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增其他收入单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "资金类别",IDC_STATIC,0,6,53,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,46,480,186
+    COMBOBOX        IDC_COMBO1,53,6,69,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,425,6,50,14
+    CTEXT           "金额",IDC_STATIC,148,6,23,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,182,6,86,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,189,239,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,248,239,50,14
+    CTEXT           "备注",IDC_STATIC,2,25,51,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TEXT,53,25,419,12,ES_AUTOHSCROLL
+END
+
+IDD_ADD_RECV DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增收款单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "客户编号",IDC_STATIC,0,6,43,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,44,480,187
+    COMBOBOX        IDC_COMBO1,45,6,62,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,437,25,37,14
+    CTEXT           "付款金额",IDC_STATIC,246,6,33,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,291,6,65,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,188,238,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,251,239,50,14
+    CTEXT           "资金类别",IDC_STATIC,121,6,43,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO2,172,6,62,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CTEXT           "优惠金额",IDC_STATIC,368,6,39,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT2,416,6,60,12,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "备注",IDC_STATIC,6,25,29,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT3,46,25,378,12,ES_AUTOHSCROLL
+END
+
+IDD_ADD_WAREOUT DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增出库单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "商品编号",-1,6,6,40,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,25,480,205
+    COMBOBOX        IDC_COMBO1,53,6,70,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,430,6,42,14
+    CTEXT           "数量",-1,173,6,23,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,211,6,69,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,189,240,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,251,240,50,14
+END
+
+IDD_ADD_OTHEROUT DIALOG DISCARDABLE  0, 0, 480, 255
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增其他支出单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "资金类别",IDC_STATIC,0,6,53,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,45,480,188
+    COMBOBOX        IDC_COMBO1,53,6,69,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,423,6,50,14
+    CTEXT           "金额",IDC_STATIC,179,6,23,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,207,6,55,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,185,239,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,244,239,50,14
+    CTEXT           "备注",IDC_STATIC,1,25,52,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TEXT,53,25,422,12,ES_AUTOHSCROLL
+END
+
+IDD_ADD_PAY DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增付款单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "供应商编号",IDC_STATIC,0,6,48,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,45,480,190
+    COMBOBOX        IDC_COMBO1,53,6,68,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,437,25,37,14
+    CTEXT           "付款金额",IDC_STATIC,243,6,41,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,289,6,60,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,178,240,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,242,239,50,14
+    CTEXT           "资金类别",IDC_STATIC,131,6,43,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO2,183,6,58,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CTEXT           "优惠金额",IDC_STATIC,360,6,48,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT2,417,6,60,12,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "备注",IDC_STATIC,0,25,30,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT3,53,25,370,12,ES_AUTOHSCROLL
+END
+
+IDD_ADD_CHARAC DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增"
+FONT 10, "System"
+BEGIN
+    CTEXT           "操作",IDC_STATIC,3,6,29,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,62,480,170
+    COMBOBOX        IDC_OPT,35,6,82,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,431,25,45,14
+    PUSHBUTTON      "确认",IDC_OK,170,239,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,239,238,50,14
+    CTEXT           "名称",IDC_STATIC_NAME,128,6,60,12,SS_CENTERIMAGE
+    CTEXT           "联系方式",IDC_STATIC,325,6,40,12,SS_CENTERIMAGE
+    CTEXT           "账户",IDC_STATIC,0,25,35,12,SS_CENTERIMAGE
+    CTEXT           "地址",IDC_STATIC,153,25,29,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_ADDRESS,195,25,233,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PHONE,373,6,98,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_COUNT,35,25,107,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_NAME,195,6,121,12,ES_AUTOHSCROLL
+    CTEXT           "联系人",IDC_STATIC_CONTAC,0,42,35,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_Contacts,35,42,72,12,ES_AUTOHSCROLL
+END
+
+IDD_ADD_GOODS DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增"
+FONT 10, "System"
+BEGIN
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,2,46,476,186
+    PUSHBUTTON      "添加",IDC_ADD,426,6,45,14
+    PUSHBUTTON      "确认",IDC_OK,182,238,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,239,238,50,14
+    CTEXT           "商品名称",IDC_STATIC,2,6,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_GOODNAME,49,6,109,12,ES_AUTOHSCROLL
+    CTEXT           "商品单价",IDC_STATIC,176,6,35,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PRICE,224,6,45,12,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "最低库存",IDC_STATIC,312,6,33,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_MIN,351,6,58,12,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "仓库编号",IDC_STATIC,2,25,40,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO1,49,25,68,30,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CTEXT           "供应商编号",IDC_STATIC,173,25,41,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO2,225,25,75,30,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_ADD_DISTRI_RETURN DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增配送退货订单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "客户编号",IDC_STATIC,6,6,34,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,46,480,192
+    COMBOBOX        IDC_COMBO1,53,6,82,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,441,6,39,14
+    CTEXT           "数量",IDC_STATIC,313,6,23,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,353,5,64,13,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,181,242,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,239,242,50,14
+    CTEXT           "商品编号",IDC_STATIC,153,6,33,13,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO2,205,6,89,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CTEXT           "退货原因",IDC_STATIC,6,24,34,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT2,53,24,416,13,ES_AUTOHSCROLL
+END
+
+IDD_ADD_ORDER_RETURN DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "新增采购退货单"
+FONT 10, "System"
+BEGIN
+    CTEXT           "商品编号",IDC_STATIC,5,6,41,12,SS_CENTERIMAGE
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,0,44,480,187
+    COMBOBOX        IDC_COMBO1,53,6,80,78,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "添加",IDC_ADD,414,6,50,14
+    CTEXT           "数量",IDC_STATIC,168,6,23,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,201,6,75,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "确认",IDC_OK,178,239,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,238,238,50,14
+    CTEXT           "备注",IDC_STATIC,5,25,41,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT2,53,25,413,12,ES_AUTOHSCROLL
+END
+
+IDD_ADD_WARE_ADJ DIALOG DISCARDABLE  0, 0, 480, 256
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "库存调整"
+FONT 10, "System"
+BEGIN
+    CTEXT           "商品编号",IDC_STATIC,8,8,32,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO2,46,8,62,44,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,1,51,479,181
+    PUSHBUTTON      "确认",IDC_OK,176,239,50,14
+    PUSHBUTTON      "删除选中行",IDC_DELETE,256,239,50,14
+    PUSHBUTTON      "添加",IDC_ADD,424,27,50,14
+    CTEXT           "实际在库量",IDC_STATIC,145,8,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT2,334,8,65,12,ES_AUTOHSCROLL
+    CTEXT           "实际单价",IDC_STATIC,276,8,44,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT1,198,8,56,12,ES_AUTOHSCROLL
+    CTEXT           "备注",IDC_STATIC,6,27,35,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT3,46,27,358,12,ES_AUTOHSCROLL
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "WMI Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "WMI\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2018\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "WMI.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "WMI 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_PROCUR_CHILDTEXT, DIALOG
+    BEGIN
+        HORZGUIDE, 16
+    END
+
+    IDD_MANAGE_CHILDTEXT, DIALOG
+    BEGIN
+        HORZGUIDE, 32
+        HORZGUIDE, 48
+        HORZGUIDE, 64
+        HORZGUIDE, 74
+    END
+
+    IDD_DATA_CHILDTEXT, DIALOG
+    BEGIN
+        HORZGUIDE, 32
+        HORZGUIDE, 48
+        HORZGUIDE, 72
+        HORZGUIDE, 88
+    END
+
+    IDD_ASSETS_CHILDTEXT, DIALOG
+    BEGIN
+        HORZGUIDE, 16
+    END
+
+    IDD_SET_CHILDTEXT, DIALOG
+    BEGIN
+        HORZGUIDE, 16
+    END
+
+    IDD_LOG, DIALOG
+    BEGIN
+        VERTGUIDE, 140
+        HORZGUIDE, 85
+        HORZGUIDE, 134
+    END
+
+    IDD_SET_SYS_PARAM, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 343
+        VERTGUIDE, 32
+        VERTGUIDE, 143
+        VERTGUIDE, 319
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 66
+        HORZGUIDE, 20
+        HORZGUIDE, 40
+        HORZGUIDE, 60
+    END
+
+    IDD_DIALOG_ADD, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 200
+        VERTGUIDE, 307
+        HORZGUIDE, 12
+        HORZGUIDE, 160
+        HORZGUIDE, 205
+        HORZGUIDE, 216
+    END
+
+    IDD_CHANGEPASS, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 139
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_ADD_ORDER, DIALOG
+    BEGIN
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_DISTRI, DIALOG
+    BEGIN
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 24
+        HORZGUIDE, 37
+        HORZGUIDE, 121
+    END
+
+    IDD_ADD_WAREIN, DIALOG
+    BEGIN
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_OTHERIN, DIALOG
+    BEGIN
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        VERTGUIDE, 347
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_RECV, DIALOG
+    BEGIN
+        VERTGUIDE, 46
+        VERTGUIDE, 53
+        VERTGUIDE, 111
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_WAREOUT, DIALOG
+    BEGIN
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_OTHEROUT, DIALOG
+    BEGIN
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_PAY, DIALOG
+    BEGIN
+        VERTGUIDE, 48
+        VERTGUIDE, 53
+        VERTGUIDE, 121
+        VERTGUIDE, 142
+        VERTGUIDE, 167
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_CHARAC, DIALOG
+    BEGIN
+        VERTGUIDE, 49
+        VERTGUIDE, 117
+        VERTGUIDE, 129
+        VERTGUIDE, 142
+        VERTGUIDE, 153
+        VERTGUIDE, 158
+        VERTGUIDE, 193
+        VERTGUIDE, 195
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+        HORZGUIDE, 54
+    END
+
+    IDD_ADD_GOODS, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        RIGHTMARGIN, 478
+        VERTGUIDE, 42
+        VERTGUIDE, 49
+        VERTGUIDE, 117
+        VERTGUIDE, 129
+        VERTGUIDE, 142
+        VERTGUIDE, 153
+        VERTGUIDE, 158
+        VERTGUIDE, 193
+        VERTGUIDE, 195
+        VERTGUIDE, 256
+        VERTGUIDE, 289
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 252
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+        HORZGUIDE, 54
+    END
+
+    IDD_ADD_DISTRI_RETURN, DIALOG
+    BEGIN
+        VERTGUIDE, 6
+        VERTGUIDE, 40
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 24
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_ORDER_RETURN, DIALOG
+    BEGIN
+        VERTGUIDE, 5
+        VERTGUIDE, 46
+        VERTGUIDE, 53
+        VERTGUIDE, 142
+        HORZGUIDE, 6
+        HORZGUIDE, 18
+        HORZGUIDE, 25
+        HORZGUIDE, 37
+    END
+
+    IDD_ADD_WARE_ADJ, DIALOG
+    BEGIN
+        VERTGUIDE, 226
+        VERTGUIDE, 240
+        VERTGUIDE, 256
+        HORZGUIDE, 8
+        HORZGUIDE, 20
+        HORZGUIDE, 27
+        HORZGUIDE, 39
+        HORZGUIDE, 119
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_ADD                 BITMAP  DISCARDABLE     "res\\add.bmp"
+IDB_DEL                 BITMAP  DISCARDABLE     "res\\del.bmp"
+IDB_LOGO_GREEN          BITMAP  DISCARDABLE     "res\\Logo_160_90.bmp"
+IDB_LOGO_BLAK           BITMAP  DISCARDABLE     "res\\源文件\\Logo.bmp"
+IDB_HOME                BITMAP  DISCARDABLE     "res\\Logo_800_450.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_ADD_OTHERIN DLGINIT
+BEGIN
+    IDC_COMBO1, 0x403, 5, 0
+0xd6cf, 0xf0bd, "\000" 
+    IDC_COMBO1, 0x403, 9, 0
+0xf8d2, 0xd0d0, 0xaad7, 0xcbd5, "\000" 
+    0
+END
+
+IDD_ADD_OTHEROUT DLGINIT
+BEGIN
+    IDC_COMBO1, 0x403, 5, 0
+0xd6cf, 0xf0bd, "\000" 
+    IDC_COMBO1, 0x403, 9, 0
+0xf8d2, 0xd0d0, 0xaad7, 0xcbd5, "\000" 
+    0
+END
+
+IDD_ADD_RECV DLGINIT
+BEGIN
+    IDC_COMBO2, 0x403, 5, 0
+0xd6cf, 0xf0bd, "\000" 
+    IDC_COMBO2, 0x403, 9, 0
+0xf8d2, 0xd0d0, 0xaad7, 0xcbd5, "\000" 
+    0
+END
+
+IDD_ADD_PAY DLGINIT
+BEGIN
+    IDC_COMBO2, 0x403, 5, 0
+0xd6cf, 0xf0bd, "\000" 
+    IDC_COMBO2, 0x403, 9, 0
+0xf8d2, 0xd0d0, 0xaad7, 0xcbd5, "\000" 
+    0
+END
+
+IDD_ADD_CHARAC DLGINIT
+BEGIN
+    IDC_OPT, 0x403, 5, 0
+0xcdbf, 0xa7bb, "\000" 
+    IDC_OPT, 0x403, 7, 0
+0xa9b9, 0xa6d3, 0xccc9, "\000" 
+    IDC_OPT, 0x403, 5, 0
+0xb1d4, 0xa4b9, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "WMI\n\nWMI\n\n\nWMI.Document\nWMI Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "WMI"
+    AFX_IDS_IDLEMESSAGE     "就绪"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "扩展名"
+    ID_INDICATOR_CAPS       "大写"
+    ID_INDICATOR_NUM        "数字"
+    ID_INDICATOR_SCRL       "滚动"
+    ID_INDICATOR_OVR        "改写"
+    ID_INDICATOR_REC        "记录"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "建立新文档\n新建"
+    ID_FILE_OPEN            "打开一个现有文档\n打开"
+    ID_FILE_CLOSE           "关闭活动文档\n关闭"
+    ID_FILE_SAVE            "保存活动文档\n保存"
+    ID_FILE_SAVE_AS         "将活动文档以一个新文件名保存\n另存为"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "显示程序信息，版本号和版权\n关于"
+    ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "打开该文档"
+    ID_FILE_MRU_FILE2       "打开该文档"
+    ID_FILE_MRU_FILE3       "打开该文档"
+    ID_FILE_MRU_FILE4       "打开该文档"
+    ID_FILE_MRU_FILE5       "打开该文档"
+    ID_FILE_MRU_FILE6       "打开该文档"
+    ID_FILE_MRU_FILE7       "打开该文档"
+    ID_FILE_MRU_FILE8       "打开该文档"
+    ID_FILE_MRU_FILE9       "打开该文档"
+    ID_FILE_MRU_FILE10      "打开该文档"
+    ID_FILE_MRU_FILE11      "打开该文档"
+    ID_FILE_MRU_FILE12      "打开该文档"
+    ID_FILE_MRU_FILE13      "打开该文档"
+    ID_FILE_MRU_FILE14      "打开该文档"
+    ID_FILE_MRU_FILE15      "打开该文档"
+    ID_FILE_MRU_FILE16      "打开该文档"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
+    ID_PREV_PANE            "切换回前一个窗格\n前一窗格"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "将活动的窗口分隔成窗格\n分隔"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "删除被选对象\n删除"
+    ID_EDIT_CLEAR_ALL       "全部删除\n全部删除"
+    ID_EDIT_COPY            "复制被选对象并将其置于剪贴板上\n复制"
+    ID_EDIT_CUT             "剪切被选对象并将其置于剪贴板上\n剪切"
+    ID_EDIT_FIND            "查找指定的正文\n查找"
+    ID_EDIT_PASTE           "插入剪贴板内容\n粘贴"
+    ID_EDIT_REPEAT          "重复上一步操作\n重复"
+    ID_EDIT_REPLACE         "用不同的正文替换指定的正文\n替换"
+    ID_EDIT_SELECT_ALL      "选择整个文档\n选择全部"
+    ID_EDIT_UNDO            "撤消最后一步操作\n撤消"
+    ID_EDIT_REDO            "重新执行先前已撤消的操作\n重新执行"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "改变窗口大小"
+    AFX_IDS_SCMOVE          "改变窗口位置"
+    AFX_IDS_SCMINIMIZE      "将窗口缩小成图标"
+    AFX_IDS_SCMAXIMIZE      "把窗口放大到最大尺寸"
+    AFX_IDS_SCNEXTWINDOW    "切换到下一个文档窗口"
+    AFX_IDS_SCPREVWINDOW    "切换到先前的文档窗口"
+    AFX_IDS_SCCLOSE         "关闭活动的窗口并提示保存所有文档"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "把窗口恢复到正常大小"
+    AFX_IDS_SCTASKLIST      "激活任务表"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ED                  "ED"
+    IDS_LS                  "LS"
+    IDS_LS2                 "LS"
+    IDS_CB                  "CB"
+    IDS_CB2                 "CB"
+    IDS_CB3                 "CB"
+    IDS_CB4                 "CB"
+    IDS_BT                  "BT"
+    IDS_BT2                 "BT"
+    IDS_BT3                 "BT"
+    IDS_BT4                 "BT"
+    IDS_BT5                 "BT"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BT6                 "BT"
+    IDS_TM                  "TM"
+    IDS_TM2                 "TM"
+    IDS_ADD_ED              "ED"
+    IDS_TREE                "tree"
+    IDS_PIC_ADD             "picture"
+    IDS_PIC_DEL             "picture"
+    IDC_CLIST               "list in view"
+    IDC_LOG                 "登录"
+    IDC_ID                  "账号"
+    IDC_PASSWORD            "密码"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\WMI.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

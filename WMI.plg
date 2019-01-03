@@ -1,0 +1,104 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: WMI - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSP9EEA.tmp" with contents
+[
+/nologo /MD /W3 /GX /ZI /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fr"Release/" /Fp"Release/WMI.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"G:\GitHub\WMI\ExternParent.cpp"
+]
+Creating command line "cl.exe @C:\Users\ryn\AppData\Local\Temp\RSP9EEA.tmp" 
+Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSP9EEB.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Release/WMI.pdb" /debug /machine:I386 /out:"Release/WMI.exe" 
+.\Release\AddDistri.obj
+.\Release\AddDistriReturn.obj
+.\Release\AddGood.obj
+.\Release\AddOrder.obj
+.\Release\AddOtherIn.obj
+.\Release\AddOtherOut.obj
+.\Release\AddPay.obj
+.\Release\AddProReturn.obj
+.\Release\AddRecv.obj
+.\Release\AddWareAdj.obj
+.\Release\Data.obj
+.\Release\DialogAdd.obj
+.\Release\Distribute.obj
+.\Release\excel.obj
+.\Release\ExternParent.obj
+.\Release\hangePass.obj
+.\Release\harac.obj
+.\Release\Log.obj
+.\Release\MainFrm.obj
+.\Release\Manage.obj
+.\Release\MyRes.obj
+.\Release\Procurment.obj
+.\Release\Set.obj
+.\Release\SetSysParam.obj
+.\Release\StdAfx.obj
+.\Release\TabDlg.obj
+.\Release\Title.obj
+.\Release\WareHouse.obj
+.\Release\WareIn.obj
+.\Release\WareOut.obj
+.\Release\WMI.obj
+.\Release\WMIDoc.obj
+.\Release\WMIView.obj
+.\Release\WMI.res
+]
+Creating command line "link.exe @C:\Users\ryn\AppData\Local\Temp\RSP9EEB.tmp"
+<h3>Output Window</h3>
+Compiling...
+ExternParent.cpp
+Linking...
+Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSPA2C4.tmp" with contents
+[
+/nologo /o"Release/WMI.bsc" 
+.\Release\StdAfx.sbr
+.\Release\AddDistri.sbr
+.\Release\AddDistriReturn.sbr
+.\Release\AddGood.sbr
+.\Release\AddOrder.sbr
+.\Release\AddOtherIn.sbr
+.\Release\AddOtherOut.sbr
+.\Release\AddPay.sbr
+.\Release\AddProReturn.sbr
+.\Release\AddRecv.sbr
+.\Release\AddWareAdj.sbr
+.\Release\Data.sbr
+.\Release\DialogAdd.sbr
+.\Release\Distribute.sbr
+.\Release\excel.sbr
+.\Release\ExternParent.sbr
+.\Release\hangePass.sbr
+.\Release\harac.sbr
+.\Release\Log.sbr
+.\Release\MainFrm.sbr
+.\Release\Manage.sbr
+.\Release\MyRes.sbr
+.\Release\Procurment.sbr
+.\Release\Set.sbr
+.\Release\SetSysParam.sbr
+.\Release\TabDlg.sbr
+.\Release\Title.sbr
+.\Release\WareHouse.sbr
+.\Release\WareIn.sbr
+.\Release\WareOut.sbr
+.\Release\WMI.sbr
+.\Release\WMIDoc.sbr
+.\Release\WMIView.sbr]
+Creating command line "bscmake.exe @C:\Users\ryn\AppData\Local\Temp\RSPA2C4.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+WMI.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

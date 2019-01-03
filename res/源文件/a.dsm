@@ -1,0 +1,131 @@
+Sub CustomCommentOut()  
+
+'DESCRIPTION: 注释/取消注释宏，可处理VB和C++、Java注释  
+
+    Dim win  
+
+    set win = ActiveWindow  
+
+    If win.type <> "Text" Then  
+
+      MsgBox "This macro can only be run when a text editor window is active."  
+
+    Else  
+
+        TypeOfFile = 3  
+
+        If TypeOfFile > 0 And TypeOfFile < 6 Then  
+
+            If TypeOfFile > 3 Then  
+
+                CommentType = "'"   ' VB注释  
+
+                CommentWidth = 1  
+
+            Else  
+
+                CommentType = "//"  ' C++、java 注释  
+
+                CommentWidth = 2  
+
+            End If  
+
+           
+
+            StartLine = ActiveDocument.Selection.TopLine  
+
+            EndLine = ActiveDocument.Selection.BottomLine  
+
+            If EndLine < StartLine Then  
+
+                Temp = StartLine  
+
+                StartLine = EndLine  
+
+                EndLine = Temp  
+
+            End If  
+
+            ' 单行  
+
+            If EndLine = StartLine Then  
+
+                ActiveDocument.Selection.StartOfLine dsFirstColumn  
+
+                ActiveDocument.Selection.CharRight dsExtend, CommentWidth  
+
+                If ActiveDocument.Selection = CommentType Then  
+
+                    ActiveDocument.Selection.Delete  
+
+                Else  
+
+                    ActiveDocument.Selection.StartOfLine dsFirstText  
+
+                    ActiveDocument.Selection.CharRight dsExtend, CommentWidth  
+
+                    If ActiveDocument.Selection = CommentType Then  
+
+                        ActiveDocument.Selection.CharRight dsExtend  
+
+                        ActiveDocument.Selection.Delete  
+
+                    Else  
+
+                        ActiveDocument.Selection.StartOfLine dsFirstText  
+
+                        ActiveDocument.Selection = CommentType + vbTab + _  
+
+                                        ActiveDocument.Selection  
+
+                    End If  
+
+                End If  
+
+            ' 多行  
+
+            Else  
+
+                For i = StartLine To EndLine  
+
+                    ActiveDocument.Selection.GoToLine i  
+
+                    CommentLoc = dsFirstColumn  
+
+                    ActiveDocument.Selection.StartOfLine CommentLoc  
+
+                    ActiveDocument.Selection.CharRight dsExtend, CommentWidth  
+
+                    If ActiveDocument.Selection = CommentType Then  
+
+                        ActiveDocument.Selection.Delete  
+
+                    Else  
+
+                        ActiveDocument.Selection.StartOfLine CommentLoc  
+
+                        ActiveDocument.Selection = CommentType + _  
+
+                                                  ActiveDocument.Selection  
+
+                    End If  
+
+                Next  
+
+            End If  
+
+        Else  
+
+            MsgBox("Unable to comment out the highlighted text" + vbLf + _  
+
+                "because the file type was unrecognized." + vbLf + _  
+
+                "If the file has not yet been saved, " + vbLf + _  
+
+                "please save it and try again.")  
+
+        End If  
+
+    End If  
+
+End Sub  
