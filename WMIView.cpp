@@ -1391,7 +1391,7 @@ void CWMIView::OnTimer(UINT nIDEvent)
 	case 1:
 		{
 			CString sql;
-			sql = "select 商品编号,在库量 from inventory where 在库量 < 最低库存";
+			sql = "select 商品编号,在库量 from inventory where 在库量 < 最低库存 and 状态 != '不可用'";
 			opt = GETDATA;
 			while(m_Critical.DeleteItem(0));
 			DB_excute(db,sql.GetBuffer(0),GetViewData,this);

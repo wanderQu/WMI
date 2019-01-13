@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+*.sbr
+*.pdb
+*.res
+*.idb
+*.bsc
+*.ilk

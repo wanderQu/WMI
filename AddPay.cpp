@@ -189,6 +189,7 @@ void CAddPay::OnOk()
 		DB_excuteNoCall(db,sql.GetBuffer(0));
 		sql.ReleaseBuffer();		
 	}
+	while(m_Ls.DeleteItem(0));	
 }
 
 void CAddPay::OnDelete() 

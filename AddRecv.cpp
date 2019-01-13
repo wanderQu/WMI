@@ -183,6 +183,7 @@ void CAddRecv::OnOk()
 		DB_excuteNoCall(db,sql.GetBuffer(0));
 		sql.ReleaseBuffer();
 	}
+	while(m_Ls.DeleteItem(0));	
 }
 
 void CAddRecv::OnDelete() 

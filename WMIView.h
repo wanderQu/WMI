@@ -96,16 +96,6 @@ protected:
 	
 //将整个界面进行分区，后续操作就对这些区域进行操作就行
 	CRect			rMenu[9];			//菜单区域
-//	CRect rHome;						//首页
-//	CRect rLogo;						//Logo
-//	CRect rProcurement;					//采购
-//	CRect rDistribution;				//配送
-//	CRect rWareHouse;					//仓库
-//	CRect rManagement;					//管理
-//	CRect rData;						//资料
-//	CRect rReport;						//资产报表
-//	CRect rSet;							//设置
-//	CRect rRest;						//菜单剩余区域
 
 	CRect			rfAnnounce;			//公告
 	CRect			rfQueue;			//待处理业务
@@ -114,22 +104,7 @@ protected:
 	CRect			rfFounction;		//功能设置
 	CRect			rfTitle;			//标题栏区
 
-//是否是首页,方便首页的绘图
 	int				DialogVisible;
-//	bool  ProcurementIsOn;
-//	bool  DistributionIsOn;
-//	bool  WareHouseIsOn;				//仓库
-//	bool  ManagementIsOn;				//管理
-//	bool  DataIsOn;						//资料
-//	bool  ReportIsOn;					//资产报表
-//	bool  SetIsOn;	
-
-//	enum {mLogo = 0,mProcurment = 1,mDistribution,mWarehouse,mManagement,mData,mReport,mSet, //菜单
-//			title,																			//标题栏
-//			fQueue,fReport,fAnnounce,fFounction												//功能区
-//		}pointAt;	
-//	int pointAt;
-//	int lastPoint;
 //获取今天的日期,用处：绘制最近配送量
 //GetDay()\GetMonth()\GetYear()获取日、月、年
 	CTime			time;

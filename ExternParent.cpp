@@ -80,7 +80,7 @@ CExternParent::CExternParent(CWnd* pParent /*=NULL*/)
 	dwTmStyle = dwStyle;		//time style
 	tmID = IDS_TM;
 
-	dwLsStyle = dwStyle | LVS_REPORT|LVS_NOSORTHEADER;		//list style
+	dwLsStyle = dwStyle | LVS_REPORT;		//list style
 	lsID = IDS_LS;
 
 	dwBtStyle = dwStyle|BS_PUSHBUTTON;		//button style
@@ -445,61 +445,6 @@ void CExternParent::OnClose()
 
 	count = -1;
 	thisPos = -1;
-//	delete [] pDialog;
-//	pDialog = NULL;
-
-	//map the pDialog ,destroy all ;and let it equals zero,while it is not equals zero
-//	for(int i = 0;i < 35;i++)
-//	{
-//		if(pDialog[i] != 0)
-//		{
-//			pDialog[i]->DestroyWindow();
-//			delete pDialog[i];
-//			pDialog[i] = 0;
-//		}
-//	}
-//	int i = 0;
-//	while(m_ed[i].m_hWnd != NULL)
-//	{
-//		delete m_ed[i];
-//		m_ed[i] = 0;
-//		i++;
-//	}
-//	i = 0;
-//	while(m_tx[i].m_hWnd != NULL)
-//	{
-//		delete m_tx[i];
-//		m_tx[i] = 0;
-//		i++;
-//	}
-//	i = 0;
-//	while(m_bt[i].m_hWnd != NULL)	
-//	{
-//		delete m_bt[i];
-//		m_bt[i] = 0;
-//		i++;
-//	}	
-//	i = 0;
-//	while(m_cb[i].m_hWnd != NULL)
-//	{
-//		delete m_cb[i];
-//		m_cb[i] = 0;
-//		i++;
-//	}	
-//	i = 0;
-//	while(m_ls[i].m_hWnd != NULL)
-//	{
-//		delete m_ls[i];
-//		m_ls[i] = 0;
-//		i++;
-//	}	
-//	i = 0;
-//	while(m_tm[i].m_hWnd != NULL)
-//	{
-//		delete m_tm[i];
-//		m_tm[i] = 0;
-//	}
-//	delete m_font;
 	memset(iTemp,0,sizeof(int) * 6);
 	memset(iCtrl,0,sizeof(int) * 6);
 //	DB_close(db);
@@ -925,69 +870,6 @@ void CExternParent::DealMessage(WPARAM wParam,LPARAM lParam)
 }
 
 
-
-//DEL void CExternParent::CreateAssertCusState(CRect rc)
-//DEL {
-//DEL 	
-//DEL 	DB_select(db,CreateCtrl,this,"assCusState");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assCusState");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateAssertExpense(CRect rc)
-//DEL {
-//DEL 	DB_select(db,CreateCtrl,this,"assExpense");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assExpense");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateAssertIncomeState(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"assIncomeState");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assIncomeState");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateAssertOtherInOut(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"assOtherInOut");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assOtherInOut");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateAssertPayable(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"assPayable");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assPayable");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateAssertReceive(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"assReceive");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assReceive");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateAssertVendorState(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"assVendorState");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assVendorState");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL 
-//DEL }
 int InsertComboBox(void*data,int argc,char** argv,char**column)
 {
 	CExternParent* dlg = (CExternParent*)data;
@@ -1001,11 +883,6 @@ void CExternParent::CreateDataOtherExpend(CRect rc)
 	DB_select(db,CreateCtrl,this,"dataOtherExpend");
 	DB_selectTitle(db_ls,CompetLs,m_ls,"dataOtherExpend");
 	tbName = "dataOtherExpend";
-//	opt = 0;
-//	char sql[] = "select 供应商编号 from manaSup where 状态 != '不可用'";
-//	DB_excute(db_ls,sql,InsertComboBox,this);
-
-
 }
 
 void CExternParent::CreateDataOtherIncome(CRect rc)
@@ -1028,25 +905,6 @@ void CExternParent::CreateDataPayment(CRect rc)
 	opt = 0;
 	DB_excute(db_ls,sql,InsertComboBox,this);
 }
-/*
-void CExternParent::CreateDataTransfer(CRect rc)
-{
-
-	DB_select(db,CreateCtrl,this,"dataTransfer");
-	DB_selectTitle(db_ls,CompetLs,m_ls,"dataTransfer");
-	InvalidateRect(rc,true);
-
-}
-*/
-//DEL void CExternParent::CreateDataVerification(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"dataVerification");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"dataVerification");
-//DEL 	DB_selectTitle(db_ls,CompetLs,&m_ls[1],"dataVerification");
-//DEL 	InvalidateRect(rc,true);
-//DEL 
-//DEL }
 
 void CExternParent::CreateDataVoucher(CRect rc)
 {
@@ -1073,14 +931,6 @@ void CExternParent::CreateDistriLs(CRect rc)
 
 }
 
-//DEL void CExternParent::CreateDistriQuery(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"distriQuery");	
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"distriQuery");
-//DEL 	tbName = "distriTrack";
-//DEL 
-//DEL }
 
 void CExternParent::CreateDistriTrack(CRect rc)
 {
@@ -1144,15 +994,6 @@ void CExternParent::CreateManaWare(CRect rc)
 	Query();
 }
 
-//DEL void CExternParent::CreateProIntel(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"proIntel");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"proIntel");
-//DEL 	tbName = "inventory";
-//DEL 
-//DEL }
-
 void CExternParent::CreateProOrder(CRect rc)
 {
 
@@ -1162,23 +1003,12 @@ void CExternParent::CreateProOrder(CRect rc)
 	DB_select(db,CreateCtrl,this,"proOrder");
 	DB_selectTitle(db_ls,CompetLs,m_ls,"proOrder");
 	tbName = "proTrack";
-//	CAddOrder dlg;
-//	dlg.DoModal();
-//	dlg.UserName = UserName;
-///	dlg.Create(IDD_ADD_ORDER,this);
+	
 	opt = 0;
 	char sql[] = "select 商品编号 from inventory where 状态 != '不可用'";
 	DB_excute(db_ls,sql,InsertComboBox,this);
 }
 
-//DEL void CExternParent::CreateProQuery(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"proQuery");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"proQuery");
-//DEL 	tbName = "proTrack";
-//DEL 
-//DEL }
 
 void CExternParent::CreateProReturn(CRect rc)
 {
@@ -1246,24 +1076,6 @@ void CExternParent::CreateWareOut(CRect rc)
 
 }
 
-//DEL void CExternParent::CreateWareQuery(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"wareQuery");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"wareQuery");
-//DEL 	tbName = "inventory";
-//DEL 
-//DEL }
-
-//DEL void CExternParent::CreateWareRequis(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"wareRequis");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"wareRequis");
-//DEL 	tbName = "inventory";
-//DEL 
-//DEL }
-
 void CExternParent::CreateWareStock(CRect rc)
 {
 
@@ -1317,13 +1129,6 @@ void CExternParent::MoveWnd(CWnd *wd, int l, int t)
 	wd->MoveWindow(rc);
 }
 
-//DEL void CExternParent::CreateAssertIncome(CRect rc)
-//DEL {
-//DEL 
-//DEL 	DB_select(db,CreateCtrl,this,"assIncome");
-//DEL 	DB_selectTitle(db_ls,CompetLs,m_ls,"assIncome");
-//DEL 
-//DEL }
 //	 0		1		2		3	  4		5
 //	edit->combo->button->text->time->list
 //#define ed		0
@@ -1385,12 +1190,7 @@ void CExternParent::CreateEd(CString strText, CRect rc)
 void CExternParent::CreateLs(CString strText, CRect rc)
 {
 	rc = MoveRect(rc,5,30,-5,30);
-/*	CRect r;
-	this->GetClientRect(r);
-	rc.bottom = r.bottom;
-	rc.left = r.left;*/
-//	CImageList imageLs;
-//	imageLs.Create(1,30,ILC_COLOR,1,1);
+
 
 //	if(iTemp[ls] >= iCtrl[ls])
 //	{
@@ -2126,11 +1926,11 @@ void CExternParent::Query()
 	{
 		if(tbName == "dataPayment" )
 		{
-			searchString = "select sum(付款金额+优惠金额) from " + tbName + " " + condition; 
+			searchString = "select sum(付款金额) from " + tbName + " " + condition; 
 		}
 		else if(tbName == "dataVoucher")
 		{
-			searchString = "select sum(收款金额+优惠金额) from " + tbName + " " + condition; 
+			searchString = "select sum(收款金额) from " + tbName + " " + condition; 
 		}
 		else if(tbName == "distriReturn" || tbName == "proReturn")
 		{

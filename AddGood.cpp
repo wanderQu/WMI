@@ -19,7 +19,6 @@ AddGood::AddGood(CWnd* pParent /*=NULL*/)
 	: CDialog(AddGood::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(AddGood)
-		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 	DB_open(&db,".\\UserData\\Data.db");
 }
@@ -29,8 +28,8 @@ void AddGood::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(AddGood)
-	DDX_Control(pDX, IDC_LIST2, m_Ls);
 	DDX_Control(pDX, IDC_PRICE, m_Price);
+	DDX_Control(pDX, IDC_LIST2, m_Ls);
 	DDX_Control(pDX, IDC_MIN, m_Min);
 	DDX_Control(pDX, IDC_GOODNAME, m_Name);
 	DDX_Control(pDX, IDC_COMBO2, m_SupID);
@@ -81,7 +80,7 @@ int GetGood(void*data,int argc,char**argv,char**column)
 		for(int i = 0;i < argc;i++)
 		{
 			argv[i] = U2G(argv[i]);
-			m_Good->m_Ls.SetItemText(item,i + 4,argv[i]);
+			m_Good->m_Ls.SetItemText(item,i + 5,argv[i]);
 		}
 		return false;
 	}
@@ -124,8 +123,8 @@ void AddGood::OnOk()
 		num++;
 		sql = "insert into inventory values('"+ result +"','"
 			+ m_Ls.GetItemText(j,0) +"','"+ m_Ls.GetItemText(j,1) 
-			+ "','" + m_Ls.GetItemText(j,3) + "','0','0','" + m_Ls.GetItemText(j,2) 
-			+ "','" + m_Ls.GetItemText(j,4) + "','" + m_Ls.GetItemText(j,5) +"','可用')";
+			+ "','" + m_Ls.GetItemText(j,4) + "','0','0','" + m_Ls.GetItemText(j,2) 
+			+ "','" + m_Ls.GetItemText(j,5) + "','" + m_Ls.GetItemText(j,6) +"','可用')";
 		DB_excuteNoCall(db,sql.GetBuffer(0));
 		sql.ReleaseBuffer();
 
@@ -134,6 +133,7 @@ void AddGood::OnOk()
 		DB_excuteNoCall(db,sql.GetBuffer(0));
 		sql.ReleaseBuffer();
 	}
+	while(m_Ls.DeleteItem(0));
 }
 
 void AddGood::OnChangePrice() 
@@ -283,7 +283,8 @@ void AddGood::OnAdd()
 	m_Ls.SetItemText(item,0,str[0]);
 	m_Ls.SetItemText(item,1,str[1]);
 	m_Ls.SetItemText(item,2,str[2]);
-	m_Ls.SetItemText(item,3,str[3]);
+	m_Ls.SetItemText(item,3,"0");
+	m_Ls.SetItemText(item,4,str[3]);
 	sql = "select 供应商编号,供应商名称 from manaSup where 供应商编号 = '" + str[4] +"'";
 	opt = InsertLs;
 	DB_excute(db,sql.GetBuffer(0),GetGood,this);

@@ -214,6 +214,7 @@ void CAddOrder::OnAdd()
 	DB_excute(db,str.GetBuffer(0),GetData,this);
 	str.ReleaseBuffer();
 	m_Ls.SetItemText(item,5,result);
+
 }
 
 void CAddOrder::OnClose() 

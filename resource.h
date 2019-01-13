@@ -100,9 +100,9 @@
 #define IDC_OPT                         1095
 #define IDC_STATIC_CONTAC               1096
 #define IDC_GOODNAME                    1098
-#define IDC_PRICE                       1099
 #define IDC_MIN                         1100
 #define IDC_TEXT                        1101
+#define IDC_PRICE                       1106
 #define IDR_TAB_CLOSE_THIS              32774
 #define IDR_TAB_CLOSE_OTHER             32775
 #define IDR_TAB_CLOSE_ALL               32776
@@ -139,7 +139,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        238
 #define _APS_NEXT_COMMAND_VALUE         32780
-#define _APS_NEXT_CONTROL_VALUE         1105
+#define _APS_NEXT_CONTROL_VALUE         1107
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

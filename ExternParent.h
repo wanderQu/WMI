@@ -8,51 +8,7 @@
 //
 
 #define WM_CREATE_WND WM_USER + 100
-//
-//#include "ProcurIntell.h"
-//#include "ProcurOrder.h"
-//#include "ProcurReturn.h"
-//#include "ProcurTrack.h"
-//#include "ProcurQuery.h"
-//
-//#include "DistributList.h"
-//#include "DistributQuery.h"
-//#include "DistributTrack.h"
-//
-//#include "WareHouseChng.h"
-//#include "WareHouseIn.h"
-//#include "WareHouseOut.h"
-//#include "WareHouseQuery.h"
-//#include "WareHouseStock.h"
-//#include "WareHouseRequisition.h"
-//
-//#include "ManageAddress.h"
-//#include "ManageGoods.h"
-//#include "ManageSupply.h"
-//#include "ManageWareHouse.h"
-//#include "ManageCus.h"
-//
-//#include "DataOtherExpend.h"
-//#include "DataOtherIncom.h"
-//#include "DataPayment.h"
-//#include "DataTransfer.h"
-//#include "DataVoucher.h"
-//#include "DataVerification.h"
-//
-//#include "AssertCusState.h"
-//#include "AssertExpense.h"
-//#include "AssertIncomState.h"
-//#include "AssertOtherInOut.h"
-//#include "AssertPayable.h"
-//#include "AssertReceivable.h"
-//#include "AssertVendorState.h"
-//
-//#include "SetLog.h"
-//#include "SetPermis.h"
-//#include "SetSysParam.h"
-//#include "TabDlg.h"
-//#include "DialogList.h"
-//#include "DialogNode.h"
+
 #include <AfxTempl.h> //carray head file
 #include ".\\include\\sqlite_dll.h"
 #pragma comment(lib,".\\libary\\sqlite_dll.lib")
@@ -164,12 +120,9 @@ public:
 	CStatic				*m_tx;
 	CButton				*m_bt;
 	CComboBox			*m_cb;
-//	CString				*strCb;
 	CListCtrl			*m_ls;
 	CDateTimeCtrl		*m_tm;
 
-//	CDialogAdd			*m_Add;
-//	CPrintDialog		*m_print;
 	CString				tbName;
 	CString				searchString;
 
@@ -179,10 +132,6 @@ public:
 	CString				sql;
 	CString				result;
 	bool				HaveTime;
-/*
-	新增按钮对应对话框
-*/
-//	CAddOrder			m_AddOrder;
 	
 // Dialog Data
 	//{{AFX_DATA(CExternParent)
@@ -208,65 +157,10 @@ public:
 	void CreateLs(CString strText,CRect rc);
 	void CreateEd(CString strText,CRect rc);
 
-//	void CreateBt(CString strText,CRect rc);
-//	typedef int (*sqlite3_callback)(
-//	void*,    /* Data provided in the 4th argument of sqlite3_exec() */
-//	int,      /* The number of columns in row */
-//	char**,   /* An array of strings representing fields in the row */
-//	char**    /* An array of strings representing column names */
-//	);
-	
-//	const CExternParent *m_this;
- //static int (*pCreateCtrl)(void *data,int argc,char **argv,char **azColName);
-
 
 	void MoveWnd(CWnd* wd,int l,int t);
 	int GetDlgPos(int n);
-	
-	//窗口内的所有控件
 
-
-//	CProcurIntell			m_ProcurIntell;
-//	CProcurOrder			m_ProcurOrder;
-//	CProcurReturn			m_ProcurReturn;
-//	CProcurTrack			m_ProcurTrack;
-//	CProcurQuery			m_ProcurQuery;
-//	
-//	CDistributList			m_DistributList;
-//	CDistributQuery			m_DistributQuery;
-//	CDistributTrack			m_DistributTrack;
-//	
-//	CWareHouseChng			m_WareHouseChng;
-//	CWareHouseIn			m_WareHouseIn;
-//	CWareHouseOut			m_WareHouseOut;
-//	CWareHouseQuery			m_WareHouseQuery;
-//	CWareHouseStock			m_WareHouseStock;
-//	CWareHouseRequisition	m_WareHouseRequisition;
-//	
-//	CManageAddress			m_ManageAddress;
-//	CManageGoods			m_ManageGoods;
-//	CManageSupply			m_ManageSupply;
-//	CManageWareHouse		m_ManageWareHouse;
-//	CManageCus				m_ManageCus;
-//	
-//	CDataOtherExpend		m_DataOtherExpend;
-//	CDataOtherIncom			m_DataOtherIncom;
-//	CDataPayment			m_DataPayment;
-//	CDataTransfer			m_DataTransfer;
-//	CDataVoucher			m_DataVoucher;
-//	CDataVerification		m_DataVerification;
-//
-//	CAssertCusState			m_AssertCusState;
-//	CAssertExpense			m_AssertExpense;
-//	CAssertIncomState		m_AssertIncomState;
-//	CAssertOtherInOut		m_AssertOtherInOut;
-//	CAssertPayable			m_AssertPayable;
-//	CAssertReceivable		m_AssertReceivable;
-//	CAssertVendorState		m_AssertVendorState;
-//	
-//	CSetLog					m_SetLog;
-//	CSetPermis				m_SetPermis;
-//	CSetSysParam			m_SetSysParam;
 
 // Overrides
 	// ClassWizard generated virtual function overrides

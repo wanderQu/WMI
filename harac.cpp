@@ -96,9 +96,9 @@ void Charac::OnAdd()
 	}
 	result = "0";
 	if(tmp == "供应商")
-		sql = "select count(*) from manaSup where 供应商名称 = '" + str[0] + "' where 状态 != '不可用'";
+		sql = "select count(*) from manaSup where 供应商名称 = '" + str[0] + "' and 状态 != '不可用'";
 	else if(tmp == "客户")
-		sql = "select count(*) from manaCus where 客户名称 = '" + str[0] + "' where 状态 != '不可用'";
+		sql = "select count(*) from manaCus where 客户名称 = '" + str[0] + "' and 状态 != '不可用'";
 	opt = GetNum;
 	DB_excute(db,sql.GetBuffer(0),GetCharac,this);
 	sql.ReleaseBuffer();
