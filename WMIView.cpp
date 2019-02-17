@@ -154,7 +154,8 @@ void CWMIView::OnDraw(CDC* pDC)
 		tRc = CRect(tRc.left,tRc.top,tRc.left + 1120,tRc.top + 600);
 		ClientToScreen(&tRc);
 		m_Parent.MoveWindow(tRc);
-		m_Parent.UserName = UserName;
+//		m_Parent.UserName = UserName;
+//		m_Parent.CompanyName = CompanyName;
 	}
 /***************************************************************************/
 
@@ -1293,7 +1294,7 @@ void CWMIView::InitProgram(CString Name)
 	strTime = " where 单据日期 between '" + t.Format("%Y-%m-%d") +"' and '" + time.Format("%Y-%m-%d") + "'";
 
 	CString sql;
-	sql = "select 商品编号,在库量 from inventory where 在库量 + 采购在订量 < 最低库存 and 状态 != '不可用'";
+	sql = "select 商品名称,在库量 from inventory where 在库量 + 采购在订量 < 最低库存 and 状态 != '不可用'";
 	opt = GETDATA;
 	DB_excute(db,sql.GetBuffer(0),GetViewData,this);
 	sql.ReleaseBuffer();
@@ -1329,6 +1330,7 @@ void CWMIView::InitProgram(CString Name)
 	DB_excute(db_Info,sql.GetBuffer(0),GetViewData,this);
 	sql.ReleaseBuffer();
 	CompanyName = result;
+	m_Parent.CompanyName = CompanyName;
 	DB_close(db_Info);
 	InvalidateRect(rfQueue);
 	InvalidateRect(rfTitle);
@@ -1391,7 +1393,7 @@ void CWMIView::OnTimer(UINT nIDEvent)
 	case 1:
 		{
 			CString sql;
-			sql = "select 商品编号,在库量 from inventory where 在库量 < 最低库存 and 状态 != '不可用'";
+			sql = "select 商品名称,在库量 from inventory where 在库量 < 最低库存 and 状态 != '不可用'";
 			opt = GETDATA;
 			while(m_Critical.DeleteItem(0));
 			DB_excute(db,sql.GetBuffer(0),GetViewData,this);

@@ -122,7 +122,7 @@ void CWareIn::OnAdd()
 			return;
 		}
 	}
-	sql = "select 仓库编号,商品编号,商品名称 from inventory where 商品编号 = '" + str[0] + "'";
+	sql = "select 仓库编号,商品编号,商品名称 from inventory where 商品名称 = '" + str[0] + "'";
 	opt = InsertLs;
 	DB_excute(db,sql.GetBuffer(0),GetWareIn,this);
 	sql.ReleaseBuffer();
@@ -187,7 +187,7 @@ BOOL CWareIn::OnInitDialog()
 	opt = GetLsHead;
 	DB_selectTitle(db,GetWareIn,this,"wareIn");
 
-	sql = "select 商品编号 from inventory where 状态 != '不可用'";
+	sql = "select 商品名称 from inventory where 状态 != '不可用'";
 	opt = GetGOOD;
 	DB_excute(db,sql.GetBuffer(0),GetWareIn,this);
 	sql.ReleaseBuffer();

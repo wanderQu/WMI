@@ -135,6 +135,37 @@ void CAddOtherIn::OnChangeEdit1()
 	// TODO: Add your control notification handler code here
 	CString str;
 	m_Money.GetWindowText(str);
-	if(str == "0")
-		m_Money.SetWindowText("");
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_Money.SetWindowText(str);
+						m_Money.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_Money.SetWindowText(str);
+					m_Money.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}
 }

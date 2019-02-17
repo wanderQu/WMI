@@ -43,7 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /ZI /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fr /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /ZI /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x804 /d "NDEBUG" /d "_AFXDLL"
@@ -132,6 +133,14 @@ SOURCE=.\AddWareAdj.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CLock.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CLock.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Data.cpp
 # End Source File
 # Begin Source File
@@ -141,6 +150,10 @@ SOURCE=.\DialogAdd.cpp
 # Begin Source File
 
 SOURCE=.\Distribute.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\EditEx.cpp
 # End Source File
 # Begin Source File
 
@@ -185,6 +198,14 @@ SOURCE=.\Set.cpp
 # Begin Source File
 
 SOURCE=.\SetSysParam.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShareMemory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ShareMemory.h
 # End Source File
 # Begin Source File
 
@@ -282,6 +303,10 @@ SOURCE=.\DialogAdd.h
 # Begin Source File
 
 SOURCE=.\Distribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\EditEx.h
 # End Source File
 # Begin Source File
 

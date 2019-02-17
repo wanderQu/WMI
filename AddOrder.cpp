@@ -19,7 +19,6 @@ CAddOrder::CAddOrder(CWnd* pParent /*=NULL*/)
 	: CDialog(CAddOrder::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CAddOrder)
-		// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 	DB_open(&db,".\\UserData\\Data.db");
 }
@@ -29,6 +28,7 @@ void CAddOrder::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAddOrder)
+	DDX_Control(pDX, IDC_TEXT, m_Text);
 	DDX_Control(pDX, IDC_EDIT1, m_Num);
 	DDX_Control(pDX, IDC_LIST2, m_Ls);
 	DDX_Control(pDX, IDC_COMBO1, m_GoodId);
@@ -90,7 +90,7 @@ BOOL CAddOrder::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 
-	char str[] = "select 商品编号 from Inventory where 状态 != '不可用'";
+	char str[] = "select 商品名称 from Inventory where 状态 != '不可用'";
 	opt = GetType;
 	DB_excute(db,str,GetData,this);
 
@@ -101,13 +101,7 @@ BOOL CAddOrder::OnInitDialog()
 
 	opt = GetLsHead;
 	DB_selectTitle(db,GetData,this,"proTrack");
-/*	m_Ls.InsertColumn(0,"商品编号"	,LVCFMT_LEFT,130,0);
-	m_Ls.InsertColumn(1,"商品名称"	,LVCFMT_LEFT,130,1);
-	m_Ls.InsertColumn(2,"商品数量"	,LVCFMT_LEFT,130,4);
-	m_Ls.InsertColumn(3,"供应商编号",LVCFMT_LEFT,130,2);
-	m_Ls.InsertColumn(4,"供应商名称",LVCFMT_LEFT,130,3);
-	m_Ls.InsertColumn(5,"商品数量"	,LVCFMT_LEFT,130,4);
-*/
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -153,7 +147,7 @@ void CAddOrder::OnOk()
 void CAddOrder::OnAdd() 
 {
 	// TODO: Add your control notification handler code here
-	CString str,tmp,tmp2;
+	CString str,tmp,tmp2,text;
 	m_GoodId.GetWindowText(tmp);
 	if(tmp.IsEmpty())
 	{
@@ -182,6 +176,11 @@ void CAddOrder::OnAdd()
 		m_Num.SetFocus();
 		return;
 	}
+	m_Text.GetWindowText(text);
+	if(text.IsEmpty())
+	{
+		text="无";
+	}
 	for(int i = 0;i < m_Ls.GetItemCount();i++)
 	{
 		CString tmp3 = m_Ls.GetItemText(i,0);
@@ -195,7 +194,7 @@ void CAddOrder::OnAdd()
 			tmp2.Format("%d",iCount);
 			m_Ls.SetItemText(i,4,tmp2);
 			opt = GetNumber;
-			str.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp2,tmp);
+			str.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp2,tmp);
 			DB_excute(db,str.GetBuffer(0),GetData,this);
 			str.ReleaseBuffer();
 			m_Ls.SetItemText(i,5,result);
@@ -203,17 +202,18 @@ void CAddOrder::OnAdd()
 		}
 	}
 	opt = LsInsert;
-	str.Format("select 商品编号,商品名称,供应商编号,供应商名称 from inventory where 商品编号 = '%s'",tmp);
+	str.Format("select 商品编号,商品名称,供应商编号,供应商名称 from inventory where 商品名称 = '%s'",tmp);
 	DB_excute(db,str.GetBuffer(0),GetData,this);
 	str.ReleaseBuffer();
 	int item = m_Ls.GetItemCount() - 1;
 	m_Ls.SetItemText(item,4,tmp2);
 
 	opt = GetNumber;
-	str.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp2,tmp);
+	str.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp2,tmp);
 	DB_excute(db,str.GetBuffer(0),GetData,this);
 	str.ReleaseBuffer();
 	m_Ls.SetItemText(item,5,result);
+	m_Ls.SetItemText(item,6,text);
 
 }
 
@@ -253,14 +253,14 @@ void CAddOrder::OnEditchangeCombo1()
 	
 	CString sql;
 	result = "0";
-	sql= "select count(*) from inventory where 商品编号 like '%"+str+"%'";
+	sql= "select count(*) from inventory where 商品名称 like '%"+str+"%'";
 	opt = GetNumber;
 	DB_excute(db,sql.GetBuffer(1),GetData,this);
 	sql.ReleaseBuffer();
 	if(result != "0")
 	{
 		m_GoodId.ResetContent();
-		sql.Format("select 商品编号 from inventory where 商品编号 like '%s%s%s'","%",str,"%");
+		sql.Format("select 商品编号 from inventory where 商品名称 like '%s%s%s'","%",str,"%");
 		opt = GetType;
 		DB_excute(db,sql.GetBuffer(1),GetData,this);
 		sql.ReleaseBuffer();

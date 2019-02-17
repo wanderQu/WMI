@@ -143,7 +143,7 @@ void CAddRecv::OnAdd()
 		str[4] = "无";
 	}
 	m_Ls.InsertItem(item,"");
-	sql = "select 客户编号,客户名称 from manaCus where 客户编号 = '"+ str[0] + "'";
+	sql = "select 客户编号,客户名称 from manaCus where 客户名称 = '"+ str[0] + "'";
 	opt = InsertLs;
 	DB_excute(db,sql.GetBuffer(0),GetRecv,this);
 	sql.ReleaseBuffer();
@@ -205,7 +205,7 @@ BOOL CAddRecv::OnInitDialog()
 	m_Ls.SetImageList(&imagelist, LVSIL_SMALL);	
 
 	opt = GetCus;
-	sql = "select 客户编号 from manaCus";
+	sql = "select 客户名称 from manaCus";
 	DB_excute(db,sql.GetBuffer(0),GetRecv,this);
 	sql.ReleaseBuffer();
 
@@ -234,8 +234,39 @@ void CAddRecv::OnChangeEdit1()
 	// TODO: Add your control notification handler code here
 	CString str;
 	m_Recv.GetWindowText(str);
-	if(str == "0")
-		m_Recv.SetWindowText("");	
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_Recv.SetWindowText(str);
+						m_Recv.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_Recv.SetWindowText(str);
+					m_Recv.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}
 }
 
 void CAddRecv::OnChangeEdit2() 
@@ -248,6 +279,37 @@ void CAddRecv::OnChangeEdit2()
 	// TODO: Add your control notification handler code here
 	CString str;
 	m_DelRecv.GetWindowText(str);
-	if(str == "0")
-		m_DelRecv.SetWindowText("");	
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_DelRecv.SetWindowText(str);
+						m_DelRecv.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_DelRecv.SetWindowText(str);
+					m_DelRecv.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}	
 }

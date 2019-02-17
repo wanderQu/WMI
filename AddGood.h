@@ -27,6 +27,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(AddGood)
 	enum { IDD = IDD_ADD_GOODS };
+	CEdit	m_GoodID;
 	CEdit	m_Price;
 	CListCtrl	m_Ls;
 	CEdit	m_Min;

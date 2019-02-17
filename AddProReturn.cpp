@@ -175,7 +175,7 @@ void CAddProReturn::OnAdd()
 			tmp2.Format("%d",iCount);
 			m_Ls.SetItemText(i,4,tmp2);
 			opt = GetNumber;
-			str.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp2,tmp);
+			str.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp2,tmp);
 			DB_excute(db,str.GetBuffer(0),GetProReturn,this);
 			str.ReleaseBuffer();
 			m_Ls.SetItemText(i,5,result);
@@ -183,14 +183,14 @@ void CAddProReturn::OnAdd()
 		}
 	}
 	opt = LsInsert;
-	str.Format("select 商品编号,商品名称,供应商编号,供应商名称 from inventory where 商品编号 = '%s'",tmp);
+	str.Format("select 商品编号,商品名称,供应商编号,供应商名称 from inventory where 商品名称 = '%s'",tmp);
 	DB_excute(db,str.GetBuffer(0),GetProReturn,this);
 	str.ReleaseBuffer();
 	int item = m_Ls.GetItemCount() - 1;
 	m_Ls.SetItemText(item,4,tmp2);
 
 	opt = GetNumber;
-	str.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp2,tmp);
+	str.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp2,tmp);
 	DB_excute(db,str.GetBuffer(0),GetProReturn,this);
 	str.ReleaseBuffer();
 	m_Ls.SetItemText(item,5,result);
@@ -217,7 +217,7 @@ BOOL CAddProReturn::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 
-	char str[] = "select 商品编号 from Inventory where 状态 != '不可用'";
+	char str[] = "select 商品名称 from Inventory where 状态 != '不可用'";
 	opt = GetType;
 	DB_excute(db,str,GetProReturn,this);
 

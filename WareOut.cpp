@@ -110,18 +110,15 @@ void CWareOut::OnAdd()
 		m_Num.SetFocus();
 		return;
 	}
-	sql = "select 在库量 from inventory where 商品编号 = '" + str[0] + "'";
+	sql = "select 在库量 from inventory where 商品名称 = '" + str[0] + "'";
 	opt = GetNum;
 	DB_excute(db,sql.GetBuffer(0),GetWareOut,this);
 	int total = atoi(result.GetBuffer(0));
 	result.ReleaseBuffer();
-	if(total < atoi(str[1].GetBuffer(0)))
+	if(total <= atoi(str[1].GetBuffer(0)))
 	{
-		if(MessageBox("出库商品数量大于商品在库量，是否继续出库操作？\
-			\rYES:出库商品数量会自动调整到在库量数量","Warnning",MB_OKCANCEL) == IDOK)
-		{
-			str[1].Format("%d",total);
-		}
+		MessageBox("出库商品数量大于商品在库量，禁止继续操作!","Warnning",MB_OK);
+		return;
 	}
 	/*cheack is it over added*/
 	int item = m_Ls.GetItemCount();
@@ -138,11 +135,8 @@ void CWareOut::OnAdd()
 			str[1].ReleaseBuffer();
 			if(count > total)
 			{
-				if(MessageBox("出库商品数量大于商品在库量，是否继续出库操作？\
-						\rYES:出库商品数量会自动调整到在库量数量","Warnning",MB_OKCANCEL) == IDOK)
-					{
-						str[1].Format("%d",total);
-					}
+				MessageBox("检测到已知清单列表中\r\n该商品的总出库数量大于在库量\r\n禁止继续操作","Warnning",MB_OK);
+				return;
 			}
 			else
 				str[1].Format("%d",count);
@@ -150,7 +144,7 @@ void CWareOut::OnAdd()
 			return;
 		}
 	}
-	sql = "select 仓库编号,商品编号,商品名称 from inventory where 商品编号 = '" + str[0] + "'";
+	sql = "select 仓库编号,商品编号,商品名称 from inventory where 商品名称 = '" + str[0] + "'";
 	opt = InsertLs;
 	DB_excute(db,sql.GetBuffer(0),GetWareOut,this);
 	sql.ReleaseBuffer();
@@ -166,7 +160,7 @@ void CWareOut::OnOk()
 	for(int i = 0;i < item;i++)
 	{
 			/*insert new data*/
-		sql = "insert into wareIn values(strftime('%Y-%m-%d %H:%M:%f','now','localtime'),'"
+		sql = "insert into wareOut values(strftime('%Y-%m-%d %H:%M:%f','now','localtime'),'"
 			+ m_Ls.GetItemText(i,0) + "','" + m_Ls.GetItemText(i,1) + "','"
 			+ m_Ls.GetItemText(i,2) + "','" + m_Ls.GetItemText(i,3) + "')";
 		DB_excuteNoCall(db,sql.GetBuffer(0));
@@ -207,7 +201,7 @@ BOOL CWareOut::OnInitDialog()
 	opt = GetLsHead;
 	DB_selectTitle(db,GetWareOut,this,"wareOut");
 
-	sql = "select 商品编号 from inventory where 状态 != '不可用'";
+	sql = "select 商品名称 from inventory where 状态 != '不可用'";
 	opt = GetGOOD;
 	DB_excute(db,sql.GetBuffer(0),GetWareOut,this);
 	sql.ReleaseBuffer();

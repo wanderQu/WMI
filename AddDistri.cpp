@@ -29,6 +29,7 @@ void CAddDistri::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAddDistri)
+	DDX_Control(pDX, IDC_TEXT, m_Text);
 	DDX_Control(pDX, IDC_LIST2, m_Ls);
 	DDX_Control(pDX, IDC_EDIT1, m_Num);
 	DDX_Control(pDX, IDC_COMBO2, m_GoodID);
@@ -106,7 +107,7 @@ int GetDistri(void* data,int argc,char** argv,char** column)
 void CAddDistri::OnAdd() 
 {
 	// TODO: Add your control notification handler code here
-	CString tmp,tmp2,tmp3,tmp4[2];
+	CString tmp,tmp2,tmp3,tmp4[2],text;
 	m_CusID.GetWindowText(tmp);
 	if(tmp.IsEmpty())
 	{
@@ -178,50 +179,67 @@ void CAddDistri::OnAdd()
 		m_Num.SetFocus();
 		return;
 	}
+	sql = "select 在库量 from inventory where 商品名称 = '" + tmp + "'";
+	opt = GetNum;
+	DB_excute(db,sql.GetBuffer(0),GetDistri,this);
+	int total = atoi(result.GetBuffer(0));
+	result.ReleaseBuffer();
+	if(total <= atoi(tmp3.GetBuffer(0)))
+	{
+		MessageBox("出库商品数量大于商品在库量，禁止继续操作!","Warnning",MB_OK);
+		return;
+	}
+
+	m_Text.GetWindowText(text);
+	if(text.IsEmpty())
+	{
+		text = "无";
+	}
 	for(int i = 0;i < m_Ls.GetItemCount();i++)
 	{
 		tmp4[0] = m_Ls.GetItemText(i,0);
 	
 		if(tmp2 == tmp4[0])
 		{
-	/*		tmp3 = m_Ls.GetItemText(i,4);
-			int iCount = atoi(tmp2.GetBuffer(0)) + atoi(tmp3.GetBuffer(0));
-			tmp2.ReleaseBuffer();
-			tmp3.ReleaseBuffer();
-			tmp2.Format("%d",iCount);
-			m_Ls.SetItemText(i,4,tmp2);*/
 			tmp4[1] = m_Ls.GetItemText(i,2);
 			if(tmp == tmp4[1])
 			{
-				CString tmp5 = m_Ls.GetItemText(i,4);
+				CString tmp5 = m_Ls.GetItemText(i,5);
 				int iCount = atoi(tmp5.GetBuffer(0)) + atoi(tmp3.GetBuffer(0));
+				if(iCount > total)
+				{
+					MessageBox("检测到已知清单列表中\r\n该商品的总配送数量大于在库量\r\n禁止继续操作","Warnning",MB_OK);
+					return;
+				}
 				tmp3.Format("%d",iCount);
-				m_Ls.SetItemText(i,4,tmp3);
+				m_Ls.SetItemText(i,5,tmp3);
 				opt = GetNum;
-				sql.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp3,tmp2);
+				sql.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp3,tmp2);
 				DB_excute(db,sql.GetBuffer(0),GetDistri,this);
 				sql.ReleaseBuffer();
-				m_Ls.SetItemText(i,5,result);
+				m_Ls.SetItemText(i,6,result);
+				m_Ls.SetItemText(i,7,text);
 				return;
 			}	
 		}
 	}
 	opt = InsertLs1;
-	sql = "select 商品编号,商品名称 from inventory where 商品编号 = '" + tmp2 + "'";
+	sql = "select 商品编号,商品名称 from inventory where 商品名称 = '" + tmp2 + "'";
 	DB_excute(db,sql.GetBuffer(0),GetDistri,this);
 	sql.ReleaseBuffer();
 	opt = InsertLs2;
-	sql = "select 客户编号,客户名称,地址 from manaCus where 客户编号 = '" + tmp + "'";
+	sql = "select 客户编号,客户名称,地址 from manaCus where 客户名称 = '" + tmp + "'";
 	DB_excute(db,sql.GetBuffer(0),GetDistri,this);
 	sql.ReleaseBuffer();
 	int item = m_Ls.GetItemCount() - 1;
 	m_Ls.SetItemText(item,5,tmp3);
 	
 	opt = GetNum;
-	sql.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp3,tmp2);
+	sql.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp3,tmp2);
 	DB_excute(db,sql.GetBuffer(0),GetDistri,this);
 	sql.ReleaseBuffer();
 	m_Ls.SetItemText(item,6,result);
+	m_Ls.SetItemText(item,7,text);
 	return;
 
 }
@@ -276,12 +294,12 @@ BOOL CAddDistri::OnInitDialog()
 	opt = GetLsHead;
 	DB_selectTitle(db,GetDistri,this,"distriTrack");
 
-	sql = "select 客户编号 from manaCus where 状态 != '不可用'";
+	sql = "select 客户名称 from manaCus where 状态 != '不可用'";
 	opt = GetCus;
 	DB_excute(db,sql.GetBuffer(0),GetDistri,this);
 	sql.ReleaseBuffer();
 
-	sql = "select 商品编号 from inventory where 状态 != '不可用'";
+	sql = "select 商品名称 from inventory where 状态 != '不可用'";
 	opt = GetGOOD;
 	DB_excute(db,sql.GetBuffer(0),GetDistri,this);
 	sql.ReleaseBuffer();
@@ -303,14 +321,14 @@ void CAddDistri::OnEditchangeCombo1()
 		return;
 	}
 	result = "0";
-	sql= "select count(*) from manaCus where 客户编号 like '%"+str+"%'";
+	sql= "select count(*) from manaCus where 客户名称 like '%"+str+"%'";
 	opt = GetNum;
 	DB_excute(db,sql.GetBuffer(1),GetDistri,this);
 	sql.ReleaseBuffer();
 	if(result != "0")
 	{
 		m_CusID.ResetContent();
-		sql.Format("select 客户编号 from manaCus where 客户编号 like '%s%s%s'","%",str,"%");
+		sql.Format("select 客户名称 from manaCus where 客户名称 like '%s%s%s'","%",str,"%");
 		opt = GetCus;
 		DB_excute(db,sql.GetBuffer(1),GetDistri,this);
 		sql.ReleaseBuffer();
@@ -332,14 +350,14 @@ void CAddDistri::OnEditchangeCombo2()
 		return;
 	}
 	result = "0";
-	sql= "select count(*) from inventory where 商品编号 like '%"+str+"%'";
+	sql= "select count(*) from inventory where 商品名称 like '%"+str+"%'";
 	opt = GetNum;
 	DB_excute(db,sql.GetBuffer(1),GetDistri,this);
 	sql.ReleaseBuffer();
 	if(result != "0")
 	{
 		m_GoodID.ResetContent();
-		sql.Format("select 商品编号 from inventory where 商品编号 like '%s%s%s'","%",str,"%");
+		sql.Format("select 商品名称 from inventory where 商品名称 like '%s%s%s'","%",str,"%");
 		opt = GetGOOD;
 		DB_excute(db,sql.GetBuffer(1),GetDistri,this);
 		sql.ReleaseBuffer();
@@ -360,8 +378,40 @@ void CAddDistri::OnChangeEdit1()
 
 	CString str;
 	m_Num.GetWindowText(str);
-	if(str == "0")
-		m_Num.SetWindowText("");
+//	if(str.GetLength() >0)
+//	{
+		if(str == "0")
+			str="";
+//		else 
+//		{
+//			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+//			{
+//				if(str.Right(1).GetAt(0) == '.')
+//				{
+//					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+//					{
+//						str.Delete(str.GetLength() - 1);
+//						m_Num.SetWindowText(str);
+//						m_Num.SetSel(-1);
+//					}
+//					else
+//						break;
+//				}
+//				else
+//				{
+//					
+//					str.Delete(str.GetLength() - 1);
+//					m_Num.SetWindowText(str);
+//					m_Num.SetSel(-1);
+//					if(str.GetLength()==0)
+//						break;
+//				}
+//			
+//			}
+//		}
+//		
+//	}
+
 }
 
 void CAddDistri::OnClose() 

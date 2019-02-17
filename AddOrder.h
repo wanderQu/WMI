@@ -23,6 +23,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CAddOrder)
 	enum { IDD = IDD_ADD_ORDER };
+	CEdit	m_Text;
 	CEdit	m_Num;
 	CListCtrl	m_Ls;
 	CComboBox	m_GoodId;

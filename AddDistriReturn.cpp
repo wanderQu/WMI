@@ -194,7 +194,8 @@ void CAddDistriReturn::OnAdd()
 			tmp2.ReleaseBuffer();
 			tmp3.ReleaseBuffer();
 			tmp2.Format("%d",iCount);
-			m_Ls.SetItemText(i,4,tmp2);*/
+			m_Ls.SetItemText(i,4,tmp2);
+	*/
 			tmp4[1] = m_Ls.GetItemText(i,2);
 			if(tmp == tmp4[1])
 			{
@@ -203,7 +204,7 @@ void CAddDistriReturn::OnAdd()
 				tmp3.Format("%d",iCount);
 				m_Ls.SetItemText(i,4,tmp3);
 				opt = GetNum;
-				sql.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp3,tmp2);
+				sql.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp3,tmp2);
 				DB_excute(db,sql.GetBuffer(0),GetDistriReturn,this);
 				sql.ReleaseBuffer();
 				m_Ls.SetItemText(i,5,result);
@@ -212,18 +213,18 @@ void CAddDistriReturn::OnAdd()
 		}
 	}
 	opt = InsertLs1;
-	sql = "select 商品编号,商品名称 from inventory where 商品编号 = '" + tmp2 + "'";
+	sql = "select 商品编号,商品名称 from inventory where 商品名称 = '" + tmp2 + "'";
 	DB_excute(db,sql.GetBuffer(0),GetDistriReturn,this);
 	sql.ReleaseBuffer();
 	opt = InsertLs2;
-	sql = "select 客户编号,客户名称 from manaCus where 客户编号 = '" + tmp + "'";
+	sql = "select 客户编号,客户名称 from manaCus where 客户名称 = '" + tmp + "'";
 	DB_excute(db,sql.GetBuffer(0),GetDistriReturn,this);
 	sql.ReleaseBuffer();
 	int item = m_Ls.GetItemCount() - 1;
 	m_Ls.SetItemText(item,4,tmp3);
 	
 	opt = GetNum;
-	sql.Format("select %s * (select 商品单价 from inventory where 商品编号 = '%s')",tmp3,tmp2);
+	sql.Format("select %s * (select 商品单价 from inventory where 商品名称 = '%s')",tmp3,tmp2);
 	DB_excute(db,sql.GetBuffer(0),GetDistriReturn,this);
 	sql.ReleaseBuffer();
 	m_Ls.SetItemText(item,5,result);
@@ -286,12 +287,12 @@ BOOL CAddDistriReturn::OnInitDialog()
 	imagelist.Create(1,24, ILC_COLOR, 1, 1); 
 	m_Ls.SetImageList(&imagelist, LVSIL_SMALL);
 
-	sql = "select 客户编号 from manaCus where 状态 != '不可用'";
+	sql = "select 客户名称 from manaCus where 状态 != '不可用'";
 	opt = GetCus;
 	DB_excute(db,sql.GetBuffer(0),GetDistriReturn,this);
 	sql.ReleaseBuffer();
 
-	sql = "select 商品编号 from inventory where 状态 != '不可用'";
+	sql = "select 商品名称 from inventory where 状态 != '不可用'";
 	opt = GetGOOD;
 	DB_excute(db,sql.GetBuffer(0),GetDistriReturn,this);
 	sql.ReleaseBuffer();

@@ -1,0 +1,4 @@
+//SUPPRESSIONPROJ:WMI
+//VERSION:5.00
+//ENABLE:Yes
+!include Mfc.sup

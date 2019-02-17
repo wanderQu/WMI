@@ -35,6 +35,7 @@
 #include "WareIn.h"
 #include "WareOut.h"
 #include "AddWareAdj.h"
+#include "ShareMemory.h"
 /////////////////////////////////////////////////////////////////////////////
 // CExternParent dialog
 
@@ -125,6 +126,11 @@ public:
 
 	CString				tbName;
 	CString				searchString;
+	CString				searchMoney;
+	UINT				lsNameNumber;
+	UINT				lsHeadNumber;		
+	bool				isDesc;
+	CShareMemory		csm;
 
 	bool				isDate;
 	CString				UserName;
@@ -132,7 +138,7 @@ public:
 	CString				sql;
 	CString				result;
 	bool				HaveTime;
-	
+	CString				CompanyName;
 // Dialog Data
 	//{{AFX_DATA(CExternParent)
 	enum { IDD = IDD_EXTERN_PARENT };
@@ -160,7 +166,37 @@ public:
 
 	void MoveWnd(CWnd* wd,int l,int t);
 	int GetDlgPos(int n);
+	enum ListName
+	{
+		proOrder,
+		proDetails,
+		proReturn,
 
+		distriOrder,
+		distriDetails,
+		distriReturn,
+
+		wareIn,
+		wareOut,
+		wareStock,
+		wareAdjust,
+
+		dataRecv,
+		dataPay,
+		dataRecable,
+		dataPayable,
+		dataOtherIn,
+		dataOtherOut
+	};
+	typedef struct tagCOPYDATA
+	{
+		UINT	listName; //list name:like 采购订单？采购明细
+		char	compName[100]; //company name
+		char	printer[100];//who operate
+		char	dateTime[100];//when:格式 where between
+		char	object[100];//who ：格式 and who = ,if null,object = NULL
+		char	fileName[MAX_PATH];
+	}COPYDATA, *PCOPYDATA;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -185,6 +221,7 @@ protected:
 	afx_msg void OnDropdownCombo1(UINT);
 	afx_msg LRESULT OnMyMessage(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT Exit(WPARAM wParam,LPARAM lParam);
+	afx_msg void OnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult);
 	DECLARE_MESSAGE_MAP()
 };
 static int CreateCtrl(void *data,int argc,char **argv,char **azColName);

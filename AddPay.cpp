@@ -144,7 +144,7 @@ void CAddPay::OnAdd()
 		str[4] = "无";
 	}
 	m_Ls.InsertItem(item,"");
-	sql = "select 供应商编号,供应商名称 from manaSup where 供应商编号 = '"+ str[0] + "'";
+	sql = "select 供应商编号,供应商名称 from manaSup where 供应商名称 = '"+ str[0] + "'";
 	opt = InsertLs;
 	DB_excute(db,sql.GetBuffer(0),GetPay,this);
 	sql.ReleaseBuffer();
@@ -211,7 +211,7 @@ BOOL CAddPay::OnInitDialog()
 	m_Ls.SetImageList(&imagelist, LVSIL_SMALL);	
 
 	opt = GetSup;
-	sql = "select 供应商编号 from manaSup";
+	sql = "select 供应商名称 from manaSup";
 	DB_excute(db,sql.GetBuffer(0),GetPay,this);
 	sql.ReleaseBuffer();
 
@@ -242,8 +242,39 @@ void CAddPay::OnChangeEdit1()
 	// TODO: Add your control notification handler code here
 	CString str;
 	m_Pay.GetWindowText(str);
-	if(str == "0")
-		m_Pay.SetWindowText("");
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_Pay.SetWindowText(str);
+						m_Pay.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_Pay.SetWindowText(str);
+					m_Pay.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}
 }
 
 void CAddPay::OnChangeEdit2() 
@@ -254,8 +285,40 @@ void CAddPay::OnChangeEdit2()
 	// with the ENM_CHANGE flag ORed into the mask.
 	
 	// TODO: Add your control notification handler code here
+
 	CString str;
 	m_DelPay.GetWindowText(str);
-	if(str == "0")
-		m_DelPay.SetWindowText("");
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_DelPay.SetWindowText(str);
+						m_DelPay.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_DelPay.SetWindowText(str);
+					m_DelPay.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}
 }

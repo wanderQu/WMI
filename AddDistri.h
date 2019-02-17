@@ -24,6 +24,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CAddDistri)
 	enum { IDD = IDD_ADD_DISTRI };
+	CEdit	m_Text;
 	CListCtrl	m_Ls;
 	CEdit	m_Num;
 	CComboBox	m_GoodID;

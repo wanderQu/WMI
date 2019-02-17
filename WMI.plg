@@ -6,8 +6,13 @@
 --------------------Configuration: WMI - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/WMI.res" /d "NDEBUG" /d "_AFXDLL" "G:\GitHub\WMI\WMI.rc"" 
-Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSP79BC.tmp" with contents
+Creating temporary file "C:\Users\wande\AppData\Local\Temp\RSP265.tmp" with contents
+[
+/nologo /MD /W3 /GX /ZI /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/WMI.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"G:\GitHub\WMI\ExternParent.cpp"
+]
+Creating command line "cl.exe @C:\Users\wande\AppData\Local\Temp\RSP265.tmp" 
+Creating temporary file "C:\Users\wande\AppData\Local\Temp\RSP276.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Release/WMI.pdb" /debug /machine:I386 /out:"Release/WMI.exe" 
 .\Release\AddDistri.obj
@@ -20,9 +25,11 @@ Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSP79BC.tmp" with conte
 .\Release\AddProReturn.obj
 .\Release\AddRecv.obj
 .\Release\AddWareAdj.obj
+.\Release\CLock.obj
 .\Release\Data.obj
 .\Release\DialogAdd.obj
 .\Release\Distribute.obj
+.\Release\EditEx.obj
 .\Release\excel.obj
 .\Release\ExternParent.obj
 .\Release\hangePass.obj
@@ -34,6 +41,7 @@ Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSP79BC.tmp" with conte
 .\Release\Procurment.obj
 .\Release\Set.obj
 .\Release\SetSysParam.obj
+.\Release\ShareMemory.obj
 .\Release\StdAfx.obj
 .\Release\TabDlg.obj
 .\Release\Title.obj
@@ -45,15 +53,17 @@ Creating temporary file "C:\Users\ryn\AppData\Local\Temp\RSP79BC.tmp" with conte
 .\Release\WMIView.obj
 .\Release\WMI.res
 ]
-Creating command line "link.exe @C:\Users\ryn\AppData\Local\Temp\RSP79BC.tmp"
+Creating command line "link.exe @C:\Users\wande\AppData\Local\Temp\RSP276.tmp"
 <h3>Output Window</h3>
-Compiling resources...
+Compiling...
+ExternParent.cpp
+G:\GitHub\WMI\ExternParent.cpp(1658) : warning C4018: '==' : signed/unsigned mismatch
 Linking...
 
 
 
 <h3>Results</h3>
-WMI.exe - 0 error(s), 0 warning(s)
+WMI.exe - 0 error(s), 1 warning(s)
 </pre>
 </body>
 </html>

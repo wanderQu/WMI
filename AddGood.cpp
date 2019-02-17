@@ -28,6 +28,7 @@ void AddGood::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(AddGood)
+	DDX_Control(pDX, IDC_ID, m_GoodID);
 	DDX_Control(pDX, IDC_PRICE, m_Price);
 	DDX_Control(pDX, IDC_LIST2, m_Ls);
 	DDX_Control(pDX, IDC_MIN, m_Min);
@@ -80,7 +81,7 @@ int GetGood(void*data,int argc,char**argv,char**column)
 		for(int i = 0;i < argc;i++)
 		{
 			argv[i] = U2G(argv[i]);
-			m_Good->m_Ls.SetItemText(item,i + 5,argv[i]);
+			m_Good->m_Ls.SetItemText(item,i + 6,argv[i]);
 		}
 		return false;
 	}
@@ -89,7 +90,7 @@ int GetGood(void*data,int argc,char**argv,char**column)
 		argv[1] = U2G(argv[1]);
 	//	::MessageBox(0,U2G(argv[0]),0,0);
 		int i = m_Good->m_Ls.GetHeaderCtrl()->GetItemCount();
-		if(strcmp(argv[1],"商品编号") && strcmp(argv[1],"状态"))
+		if(strcmp(argv[1],"状态"))
 			m_Good->m_Ls.InsertColumn(i,argv[1],LVCFMT_CENTER,130,0);
 		return false;
 	}
@@ -107,24 +108,24 @@ void AddGood::OnOk()
 {
 	// TODO: Add your control notification handler code here
 	int item = m_Ls.GetItemCount();
-	sql = "select count(*) from inventory";
-	opt = GetNum;
-	DB_excute(db,sql.GetBuffer(0),GetGood,this);
-	sql.ReleaseBuffer();
-	int num = atoi(result.GetBuffer(0));
-	result.ReleaseBuffer();
+//	sql = "select count(*) from inventory";
+//	opt = GetNum;
+//	DB_excute(db,sql.GetBuffer(0),GetGood,this);
+//	sql.ReleaseBuffer();
+//	int num = atoi(result.GetBuffer(0));
+//	result.ReleaseBuffer();
 
 	for(int j = 0;j < item;j++)
 	{
-		result.Format("%d",num + 1);
-		for(int i = 0;i <= 5 - result.GetLength();i++)
-			result = "0" + result;
-		result = "G" + result;
-		num++;
-		sql = "insert into inventory values('"+ result +"','"
-			+ m_Ls.GetItemText(j,0) +"','"+ m_Ls.GetItemText(j,1) 
-			+ "','" + m_Ls.GetItemText(j,4) + "','0','0','" + m_Ls.GetItemText(j,2) 
-			+ "','" + m_Ls.GetItemText(j,5) + "','" + m_Ls.GetItemText(j,6) +"','可用')";
+//		result.Format("%d",num + 1);
+//		for(int i = 0;i <= 5 - result.GetLength();i++)
+//			result = "0" + result;
+//		result = "G" + result;
+//		num++;
+		sql = "insert into inventory values('"+ m_Ls.GetItemText(j,0) +"','"
+			+ m_Ls.GetItemText(j,1) +"','"+ m_Ls.GetItemText(j,2) 
+			+ "','" + m_Ls.GetItemText(j,5) + "','0','0','" + m_Ls.GetItemText(j,3) 
+			+ "','" + m_Ls.GetItemText(j,6) + "','" + m_Ls.GetItemText(j,7) +"','可用')";
 		DB_excuteNoCall(db,sql.GetBuffer(0));
 		sql.ReleaseBuffer();
 
@@ -146,8 +147,39 @@ void AddGood::OnChangePrice()
 	// TODO: Add your control notification handler code here
 	CString str;
 	m_Price.GetWindowText(str);
-	if(str == "0")
-		m_Price.SetWindowText("");
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_Price.SetWindowText(str);
+						m_Price.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_Price.SetWindowText(str);
+					m_Price.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}
 
 }
 
@@ -175,7 +207,7 @@ BOOL AddGood::OnInitDialog()
 	m_Ls.SetImageList(&imagelist, LVSIL_SMALL);	
 
 	// TODO: Add extra initialization here
-	sql = "select 供应商编号 from manaSup where 状态 != '不可用'";
+	sql = "select 供应商名称 from manaSup where 状态 != '不可用'";
 	opt = GetSup;
 	DB_excute(db,sql.GetBuffer(0),GetGood,this);
 	sql.ReleaseBuffer();
@@ -207,7 +239,14 @@ void AddGood::OnEditchangeCombo2()
 void AddGood::OnAdd() 
 {
 	// TODO: Add your control notification handler code here
-	CString str[5];
+	CString str[5],ID;
+	m_GoodID.GetWindowText(ID);
+	if(ID.IsEmpty())
+	{
+		MessageBox("商品编号不能为空","error");
+		m_GoodID.SetFocus();
+		return;
+	}
 	m_Name.GetWindowText(str[0]);
 	if(str[0].IsEmpty())
 	{
@@ -216,7 +255,7 @@ void AddGood::OnAdd()
 		return;
 	}
 	opt=GetNum;
-	sql = "select count(*) from Inventory where 商品名称 = '" + str[0] + "'";
+	sql = "select count(*) from Inventory where 商品名称 = '" + str[0] + "' or 商品编号 = '"+ID+"' and 状态 != '不可用'";
 	DB_excute(db,sql.GetBuffer(0),GetGood,this);
 	sql.ReleaseBuffer();
 
@@ -257,35 +296,40 @@ void AddGood::OnAdd()
 	for(int i = 0;i < item;i++)
 	{
 		result = m_Ls.GetItemText(i,0);
-		if(result == str[0])
+		if(result == ID)
 		{
-			if(MessageBox("添加列表已经存在，是否覆盖？","提示",MB_OKCANCEL) == IDOK)
+			if(MessageBox("添加编号，列表已经存在，是否覆盖？","提示",MB_OKCANCEL) == IDOK)
 			{
-				for(int j = 0;j < 4;j++)
-				{
-					m_Ls.SetItemText(i,j,str[i]);
-				}
-				sql = "select 供应商编号,供应商名称 from manaSup where 供应商编号 = '" + str[4] +"'";
-				opt = InsertLs;
-				DB_excute(db,sql.GetBuffer(0),GetGood,this);
-				return;
+//				for(int j = 1;j < 5;j++)
+//				{
+//					m_Ls.SetItemText(i,j,str[i]);
+//				}
+//				sql = "select 供应商编号,供应商名称 from manaSup where 供应商名称 = '" + str[4] +"'";
+//				opt = InsertLs;
+//				DB_excute(db,sql.GetBuffer(0),GetGood,this);
+//				return;
+				m_Ls.DeleteItem(i);
+				item = item - 1;
+				break;
 			}
 			else
 			{
 				m_Name.SetWindowText("");
 				m_Price.SetWindowText("");
 				m_Min.SetWindowText("1");
+				return;
 			}
-			return;
+			
 		}
 	}
 	m_Ls.InsertItem(item,"");
-	m_Ls.SetItemText(item,0,str[0]);
-	m_Ls.SetItemText(item,1,str[1]);
-	m_Ls.SetItemText(item,2,str[2]);
-	m_Ls.SetItemText(item,3,"0");
-	m_Ls.SetItemText(item,4,str[3]);
-	sql = "select 供应商编号,供应商名称 from manaSup where 供应商编号 = '" + str[4] +"'";
+	m_Ls.SetItemText(item,0,ID);
+	m_Ls.SetItemText(item,1,str[0]);
+	m_Ls.SetItemText(item,2,str[1]);
+	m_Ls.SetItemText(item,3,str[2]);
+	m_Ls.SetItemText(item,4,"0");
+	m_Ls.SetItemText(item,5,str[3]);
+	sql = "select 供应商编号,供应商名称 from manaSup where 供应商名称 = '" + str[4] +"'";
 	opt = InsertLs;
 	DB_excute(db,sql.GetBuffer(0),GetGood,this);
 	sql.ReleaseBuffer();

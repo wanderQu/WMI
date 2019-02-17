@@ -139,7 +139,7 @@ void CAddWareAdj::OnAdd()
 				return;
 			}
 		}
-		sql = "select 商品编号,商品名称,商品单价,在库量 from inventory where 商品编号 = '"+str[0]+"'";
+		sql = "select 商品编号,商品名称,商品单价,在库量 from inventory where 商品名称 = '"+str[0]+"'";
 		opt = InsertLs;
 		m_Ls.InsertItem(item,"");
 		DB_excute(db,sql.GetBuffer(0),GetWareAdj,this);
@@ -251,10 +251,10 @@ void CAddWareAdj::OnOk()
 		sql = "update inventory ";
 		if(price[0] != price[1])
 		{
-			sql = sql + "set 商品单价 = '" + m_Ls.GetItemText(i,3) + "'"; 
+			sql = sql + " set 商品单价 = '" + m_Ls.GetItemText(i,3) + "'"; 
 			if(num[0] != num[1])
 			{
-				sql = sql + ",set 在库量 = '" + m_Ls.GetItemText(i,5) + "'";
+				sql = sql + ", 在库量 = '" + m_Ls.GetItemText(i,5) + "'";
 			}
 			sql = sql + " where 商品编号 = '" + m_Ls.GetItemText(i,0) + "'";
 			DB_excuteNoCall(db,sql.GetBuffer(0));          
@@ -264,7 +264,7 @@ void CAddWareAdj::OnOk()
 		{
 			if(num[0] != num[1])
 			{
-				sql = sql + "set 在库量 = '" + m_Ls.GetItemText(i,5) + "' where 商品编号 = '"
+				sql = sql + " set 在库量 = '" + m_Ls.GetItemText(i,5) + "' where 商品编号 = '"
 					+ m_Ls.GetItemText(i,0) + "'";
 				DB_excuteNoCall(db,sql.GetBuffer(0));          
 				sql.ReleaseBuffer();
@@ -309,7 +309,7 @@ BOOL CAddWareAdj::OnInitDialog()
 	DB_excute(db,sql.GetBuffer(0),GetWareAdj,this);
 	sql.ReleaseBuffer();
 	
-	sql = "select 商品编号 from inventory where 状态 != '不可用'";
+	sql = "select 商品名称 from inventory where 状态 != '不可用'";
 	opt = GetGOOD;
 	DB_excute(db,sql.GetBuffer(0),GetWareAdj,this);
 	sql.ReleaseBuffer();
@@ -342,6 +342,37 @@ void CAddWareAdj::OnChangeEdit2()
 	// TODO: Add your control notification handler code here
 	CString str;
 	m_RePrice.GetWindowText(str);
-	if(str == "0")
-		m_RePrice.SetWindowText("");
+	if(str.GetLength() >0)
+	{
+		if(str == "0")
+			str="";
+		else 
+		{
+			while(str.Right(1).GetAt(0) < '0' || str.Right(1).GetAt(0) > '9')
+			{
+				if(str.Right(1).GetAt(0) == '.')
+				{
+					if(str.Find(".") != str.GetLength() - 1 || str.GetAt(0) == '.')
+					{
+						str.Delete(str.GetLength() - 1);
+						m_RePrice.SetWindowText(str);
+						m_RePrice.SetSel(-1);
+					}
+					else
+						break;
+				}
+				else
+				{
+					
+					str.Delete(str.GetLength() - 1);
+					m_RePrice.SetWindowText(str);
+					m_RePrice.SetSel(-1);
+					if(str.GetLength()==0)
+						break;
+				}
+			
+			}
+		}
+		
+	}
 }

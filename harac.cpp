@@ -51,6 +51,7 @@ BEGIN_MESSAGE_MAP(Charac, CDialog)
 	ON_CBN_SELCHANGE(IDC_OPT, OnSelchangeOpt)
 	ON_WM_CLOSE()
 	ON_EN_CHANGE(IDC_NAME, OnChangeName)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST2, OnColumnclickList2)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -348,4 +349,12 @@ void Charac::OnChangeName()
 	m_Name.GetWindowText(str);
 	if(str == " ")
 		m_Name.SetWindowText("");
+}
+
+void Charac::OnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	// TODO: Add your control notification handler code here
+	
+	*pResult = 0;
 }

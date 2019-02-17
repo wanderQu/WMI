@@ -2,13 +2,13 @@
 
 [General Info]
 Version=1
-LastClass=AddGood
-LastTemplate=CDialog
+LastClass=CAddWareAdj
+LastTemplate=CEdit
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "wmi.h"
 LastPage=0
 
-ClassCount=31
+ClassCount=32
 Class1=CAddDistri
 Class2=CAddDistriReturn
 Class3=AddGood
@@ -41,60 +41,60 @@ Class29=CAboutDlg
 Class30=CWMIDoc
 Class31=CWMIView
 
-ResourceCount=31
-Resource1=IDD_ADD_WAREOUT
-Resource2=IDR_DELETE
-Resource3=IDR_MENU
-Resource4=IDD_TITLE_CHILDTEXT
-Resource5=IDD_ASSETS_CHILDTEXT
-Resource6=IDD_ADD_PAY
-Resource7=IDD_ADD_DISTRI
-Resource8=IDD_PROCUR_CHILDTEXT
-Resource9=IDD_ADD_OTHEROUT
-Resource10=IDD_ADD_ORDER_RETURN
-Resource11=IDD_ADD_ORDER
-Resource12=IDD_DISTRIBUT_CHILDTEXT
-Resource13=IDD_ADD_DISTRI_RETURN
-Resource14=IDR_MAINFRAME
-Resource15=IDD_WAREHOUSE_CHILDTEXT
-Resource16=IDD_SET_CHILDTEXT
-Resource17=IDD_ADD_CHARAC
-Resource18=IDD_TABDLG
-Resource19=IDD_DIALOG_ADD
-Resource20=IDD_SET_SYS_PARAM
-Resource21=IDD_CHANGEPASS
-Resource22=IDD_ADD_RECV
-Resource23=IDD_ABOUTBOX
-Resource24=IDD_ADD_OTHERIN
-Resource25=IDD_DATA_CHILDTEXT
-Resource26=IDD_ADD_WAREIN
-Resource27=IDD_ADD_GOODS
-Resource28=IDD_EXTERN_PARENT
-Resource29=IDD_LOG
-Resource30=IDD_MANAGE_CHILDTEXT
-Resource31=IDD_ADD_WARE_ADJ
+ResourceCount=30
+Resource1=IDD_TABDLG
+Resource2=IDD_LOG
+Resource3=IDD_ABOUTBOX
+Resource4=IDD_ADD_WAREOUT
+Resource5=IDD_ADD_ORDER_RETURN
+Resource6=IDD_MANAGE_CHILDTEXT
+Resource7=IDD_WAREHOUSE_CHILDTEXT
+Resource8=IDD_TITLE_CHILDTEXT
+Resource9=IDR_MENU
+Resource10=IDD_DISTRIBUT_CHILDTEXT
+Resource11=IDD_SET_SYS_PARAM
+Resource12=IDD_EXTERN_PARENT
+Resource13=IDD_ADD_CHARAC
+Resource14=IDD_ADD_GOODS
+Resource15=IDD_ADD_OTHEROUT
+Resource16=IDD_PROCUR_CHILDTEXT
+Resource17=IDD_ADD_WAREIN
+Resource18=IDD_DIALOG_ADD
+Resource19=IDD_DATA_CHILDTEXT
+Resource20=IDD_ADD_ORDER
+Resource21=IDD_ADD_PAY
+Resource22=IDD_ADD_OTHERIN
+Resource23=IDD_ADD_DISTRI_RETURN
+Resource24=IDD_ADD_DISTRI
+Resource25=IDR_MAINFRAME
+Resource26=IDD_ADD_RECV
+Resource27=IDD_ASSETS_CHILDTEXT
+Resource28=IDD_CHANGEPASS
+Resource29=IDD_SET_CHILDTEXT
+Class32=CEditEx
+Resource30=IDD_ADD_WARE_ADJ
 
 [CLS:CAddDistri]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddDistri.h
 ImplementationFile=AddDistri.cpp
+Filter=D
+VirtualFilter=dWC
+LastObject=IDC_EDIT1
 
 [CLS:CAddDistriReturn]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddDistriReturn.h
 ImplementationFile=AddDistriReturn.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=IDC_EDIT1
 
 [CLS:AddGood]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddGood.h
 ImplementationFile=AddGood.cpp
-LastObject=AddGood
+LastObject=IDC_PRICE
 Filter=D
 VirtualFilter=dWC
 
@@ -103,61 +103,48 @@ Type=0
 BaseClass=CDialog
 HeaderFile=AddOrder.h
 ImplementationFile=AddOrder.cpp
-LastObject=IDC_EDIT1
+Filter=D
+VirtualFilter=dWC
+LastObject=CAddOrder
 
 [CLS:CAddOtherIn]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddOtherIn.h
 ImplementationFile=AddOtherIn.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=CAddOtherIn
+LastObject=IDC_EDIT1
 
 [CLS:CAddOtherOut]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddOtherOut.h
 ImplementationFile=AddOtherOut.cpp
-LastObject=CAddOtherOut
-Filter=D
-VirtualFilter=dWC
 
 [CLS:CAddPay]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddPay.h
 ImplementationFile=AddPay.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=CAddPay
 
 [CLS:CAddProReturn]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddProReturn.h
 ImplementationFile=AddProReturn.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=IDC_EDIT1
 
 [CLS:CAddRecv]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddRecv.h
 ImplementationFile=AddRecv.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=CAddRecv
+LastObject=IDC_EDIT2
 
 [CLS:CAddWareAdj]
 Type=0
 BaseClass=CDialog
 HeaderFile=AddWareAdj.h
 ImplementationFile=AddWareAdj.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=CAddWareAdj
+LastObject=IDC_EDIT2
 
 [CLS:CData]
 Type=0
@@ -182,21 +169,22 @@ Type=0
 BaseClass=CDialog
 HeaderFile=ExternParent.h
 ImplementationFile=ExternParent.cpp
+LastObject=CExternParent
 
 [CLS:ChangePass]
 Type=0
 BaseClass=CDialog
 HeaderFile=hangePass.h
 ImplementationFile=hangePass.cpp
-LastObject=IDC_EDIT3
-Filter=D
-VirtualFilter=dWC
 
 [CLS:Charac]
 Type=0
 BaseClass=CDialog
 HeaderFile=harac.h
 ImplementationFile=harac.cpp
+Filter=D
+VirtualFilter=dWC
+LastObject=IDC_LIST2
 
 [CLS:CLog]
 Type=0
@@ -233,9 +221,6 @@ Type=0
 BaseClass=CDialog
 HeaderFile=SetSysParam.h
 ImplementationFile=SetSysParam.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=CSetSysParam
 
 [CLS:CTabDlg]
 Type=0
@@ -260,18 +245,12 @@ Type=0
 BaseClass=CDialog
 HeaderFile=WareIn.h
 ImplementationFile=WareIn.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=IDC_ADD
 
 [CLS:CWareOut]
 Type=0
 BaseClass=CDialog
 HeaderFile=WareOut.h
 ImplementationFile=WareOut.cpp
-Filter=D
-VirtualFilter=dWC
-LastObject=65535
 
 [CLS:CWMIApp]
 Type=0
@@ -284,7 +263,6 @@ Type=0
 BaseClass=CDialog
 HeaderFile=WMI.cpp
 ImplementationFile=WMI.cpp
-LastObject=CAboutDlg
 
 [CLS:CWMIDoc]
 Type=0
@@ -297,14 +275,11 @@ Type=0
 BaseClass=CView
 HeaderFile=WMIView.h
 ImplementationFile=WMIView.cpp
-Filter=C
-VirtualFilter=VWC
-LastObject=CWMIView
 
 [DLG:IDD_ADD_DISTRI]
 Type=1
 Class=CAddDistri
-ControlCount=10
+ControlCount=12
 Control1=IDC_STATIC,static,1342308865
 Control2=IDC_LIST2,SysListView32,1350664205
 Control3=IDC_COMBO1,combobox,1344340227
@@ -315,6 +290,8 @@ Control7=IDC_OK,button,1342242816
 Control8=IDC_DELETE,button,1342242816
 Control9=IDC_STATIC,static,1342308865
 Control10=IDC_COMBO2,combobox,1344340227
+Control11=IDC_TEXT,edit,1350631552
+Control12=IDC_STATIC,static,1342308865
 
 [DLG:IDD_ADD_DISTRI_RETURN]
 Type=1
@@ -336,7 +313,7 @@ Control12=IDC_EDIT2,edit,1350631552
 [DLG:IDD_ADD_GOODS]
 Type=1
 Class=AddGood
-ControlCount=14
+ControlCount=16
 Control1=IDC_LIST2,SysListView32,1350664205
 Control2=IDC_ADD,button,1342242816
 Control3=IDC_OK,button,1342242816
@@ -351,11 +328,13 @@ Control11=IDC_COMBO1,combobox,1344340227
 Control12=IDC_STATIC,static,1342308865
 Control13=IDC_COMBO2,combobox,1344340227
 Control14=IDC_PRICE,edit,1350631552
+Control15=IDC_STATIC,static,1342308865
+Control16=IDC_ID,edit,1350631552
 
 [DLG:IDD_ADD_ORDER]
 Type=1
 Class=CAddOrder
-ControlCount=8
+ControlCount=10
 Control1=IDC_STATIC,static,1342308865
 Control2=IDC_LIST2,SysListView32,1350664205
 Control3=IDC_COMBO1,combobox,1342242883
@@ -364,6 +343,8 @@ Control5=IDC_STATIC,static,1342308865
 Control6=IDC_EDIT1,edit,1350639744
 Control7=IDC_OK,button,1342242816
 Control8=IDC_DELETE,button,1342242816
+Control9=IDC_STATIC,static,1342308865
+Control10=IDC_TEXT,edit,1350631552
 
 [DLG:IDD_ADD_OTHERIN]
 Type=1
@@ -374,7 +355,7 @@ Control2=IDC_LIST2,SysListView32,1350664205
 Control3=IDC_COMBO1,combobox,1344340227
 Control4=IDC_ADD,button,1342242816
 Control5=IDC_STATIC,static,1342308865
-Control6=IDC_EDIT1,edit,1350639744
+Control6=IDC_EDIT1,edit,1350631552
 Control7=IDC_OK,button,1342242816
 Control8=IDC_DELETE,button,1342242816
 Control9=IDC_STATIC,static,1342308865
@@ -389,7 +370,7 @@ Control2=IDC_LIST2,SysListView32,1350664205
 Control3=IDC_COMBO1,combobox,1344340227
 Control4=IDC_ADD,button,1342242816
 Control5=IDC_STATIC,static,1342308865
-Control6=IDC_EDIT1,edit,1350639744
+Control6=IDC_EDIT1,edit,1350631552
 Control7=IDC_OK,button,1342242816
 Control8=IDC_DELETE,button,1342242816
 Control9=IDC_STATIC,static,1342308865
@@ -404,13 +385,13 @@ Control2=IDC_LIST2,SysListView32,1350664205
 Control3=IDC_COMBO1,combobox,1344340227
 Control4=IDC_ADD,button,1342242816
 Control5=IDC_STATIC,static,1342308865
-Control6=IDC_EDIT1,edit,1350639744
+Control6=IDC_EDIT1,edit,1350631552
 Control7=IDC_OK,button,1342242816
 Control8=IDC_DELETE,button,1342242816
 Control9=IDC_STATIC,static,1342308865
 Control10=IDC_COMBO2,combobox,1344340227
 Control11=IDC_STATIC,static,1342308865
-Control12=IDC_EDIT2,edit,1350639744
+Control12=IDC_EDIT2,edit,1350631552
 Control13=IDC_STATIC,static,1342308865
 Control14=IDC_EDIT3,edit,1350631552
 
@@ -438,13 +419,13 @@ Control2=IDC_LIST2,SysListView32,1350664205
 Control3=IDC_COMBO1,combobox,1344340227
 Control4=IDC_ADD,button,1342242816
 Control5=IDC_STATIC,static,1342308865
-Control6=IDC_EDIT1,edit,1350639744
+Control6=IDC_EDIT1,edit,1350631552
 Control7=IDC_OK,button,1342242816
 Control8=IDC_DELETE,button,1342242816
 Control9=IDC_STATIC,static,1342308865
 Control10=IDC_COMBO2,combobox,1344340227
 Control11=IDC_STATIC,static,1342308865
-Control12=IDC_EDIT2,edit,1350639744
+Control12=IDC_EDIT2,edit,1350631552
 Control13=IDC_STATIC,static,1342308865
 Control14=IDC_EDIT3,edit,1350631552
 
@@ -659,13 +640,6 @@ Command10=ID_EDIT_PASTE
 Command11=ID_APP_ABOUT
 CommandCount=11
 
-[MNU:IDR_DELETE]
-Type=1
-Class=?
-Command1=IDM_DELETE
-Command2=IDM_CANCEL
-CommandCount=2
-
 [ACL:IDR_MAINFRAME]
 Type=1
 Class=?
@@ -696,4 +670,13 @@ Control5=IDC_VENDORSTATMENT,static,1342309120
 Control6=IDC_OTHERINCOME,static,1342309120
 Control7=IDC_INCOMESTATEMENT,static,1342309120
 Control8=IDC_INCOME,static,1342309120
+
+[CLS:CEditEx]
+Type=0
+HeaderFile=EditEx.h
+ImplementationFile=EditEx.cpp
+BaseClass=CEdit
+Filter=W
+VirtualFilter=WC
+LastObject=CEditEx
 

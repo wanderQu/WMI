@@ -74,7 +74,7 @@ CExternParent::CExternParent(CWnd* pParent /*=NULL*/)
 	dwTxStyle = dwStyle | SS_CENTER | SS_CENTERIMAGE;	//cstatic style
 	txID = 0;
 
-	dwCbStyle = dwStyle | CBS_DROPDOWN | LBS_SORT | CBS_SIMPLE;		//combo style
+	dwCbStyle = dwStyle | CBS_DROPDOWN | LBS_SORT | CBS_SIMPLE | WS_VSCROLL;		//combo style
 	cbID = IDS_CB;
 
 	dwTmStyle = dwStyle;		//time style
@@ -100,6 +100,7 @@ CExternParent::CExternParent(CWnd* pParent /*=NULL*/)
 	DB_open(&db,".\\UserData\\DataBase.db");
 	DB_open(&db_ls,".\\UserData\\Data.db");
 
+	isDesc = false;
 //	m_Add = new CDialogAdd;
 }
 
@@ -131,10 +132,12 @@ BEGIN_MESSAGE_MAP(CExternParent, CDialog)
 	ON_COMMAND_RANGE(IDS_BT,IDS_BT6,OnBtClick)
 	ON_MESSAGE(WM_CREATE_WND, OnMyMessage)
 	ON_MESSAGE(WM_USER + 1, Exit)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDS_LS, OnColumnclickList2)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CExternParent message handlers
+
 LRESULT CExternParent::Exit(WPARAM wParam, LPARAM lParam)
 {
 	switch(wParam)
@@ -154,43 +157,12 @@ LRESULT CExternParent::Exit(WPARAM wParam, LPARAM lParam)
 		}
 	case 1:
 		{
-			//CDiaogAdd->saveSrc;			copy dialog list info;
-//			for(int i = 0;i < num;i++)
-	//		m_ls->InsertItem(
-//			m_Add->isLsEmpty = -1;
-//			for(int i = 0;i < m_Add->column;i++)
-//				delete [] m_Add->list[i];
-//			delete [] m_Add->list;
-//			m_Add->m_Ls.DeleteAllItems();		//delete all item
-	/*		int item = m_ls->GetItemCount();
-			for(int i = item;i <= m_Add->item + item;i++)
-			{
-				m_ls->InsertItem(i,"");
-				for(int j = 0;j <= m_Add->column;j++)
-				{
-					m_ls->SetItemText(i,j,m_Add->m_Ls.GetItemText(i,j));
-				}
-			}
-			m_Add->column = 0;
-			m_Add->item = -1;
-			while(m_Add->m_Ls.DeleteColumn(0)); //delete all column*/
+
 			Query();
 
 		}
 	case 2:
 		{
-			//CDialogAdd->cancleSrc;		nothing to do;
-//			for(int i = 0;i < m_Add->column;i++)
-//				delete [] m_Add->list[i];
-//			delete [] m_Add->list;
-//
-//			m_Add->m_Ls.DeleteAllItems();
-//			m_Add->isLsEmpty = -1;
-	/*		m_Add->column = 0;
-			m_Add->item = -1;
-			while(m_Add->m_Ls.DeleteColumn(0));*/
-//			m_Add->DestroyWindow();
-//			CloseHandle(m_Add->GetSafeHwnd());
 
 		}
 	}
@@ -204,9 +176,7 @@ LRESULT CExternParent::OnMyMessage(WPARAM wParam, LPARAM lParam)
 	{
 		ShowWindow(true);
 	}
-//	if(m_font == NULL)
-//		m_font = m_Tab.GetFont();
-//	
+	
 	DealMessage(wParam,lParam);
 	return 0;
 }
@@ -226,31 +196,11 @@ void CExternParent::OnBtClick(UINT id)
 //	CWnd *p = GetFocus();
 	CString str;
 	GetDlgItem(id)->GetWindowText(str);
-//	if(strcmp(str,"列表设置"))
-//	{ 
-//		//获取第一个列表的列名，然后弹出窗口进行设置？DoMadol结束，获取新的排序
-//		//然后设置列表，但是
-//
-//	}
-//	else 
+ 
 	if(!strcmp(str,"新增"))
 	{
 		//首先要判断新增的对象，是~List对象的文本，还是关于List的数据
 	
-//		if(m_Add->m_hWnd == 0)
-	//		m_Add->Create(IDD_DIALOG_ADD,this);
-		
-
-	//	m_Add->ShowWindow(true);
-//		m_Add->isDate = isDate;
-//		m_Add->tbName = tbName;
-//		CopyLsData(&m_Add->m_Ls,m_ls); //通过地址操作
-
-	//	m_Add->column = m_Add->m_Ls.GetHeaderCtrl()->GetItemCount();
-	
-	//	m_Add->m_Ls.InsertColumn(0,"操作",LVCFMT_CENTER,50,0);
-		
-	//	this->EnableWindow(false);
 		if(tbName == "inventory")
 		{
 			AddGood dlg;
@@ -498,7 +448,9 @@ void CExternParent::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 //			pDialog[i]->ShowWindow(false);
 //	}
 //	
-
+	isDesc = false;
+	searchString = "";
+	lsHeadNumber = -1;
 	Show(5);
 
 	memset(iTemp,0,sizeof(int) * 6);
@@ -533,19 +485,29 @@ void CExternParent::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 
 		switch(pos)
 		{
-			case 0:  CreateProOrder(m_TabRc);break;
-			case 1:  CreateProTrack(m_TabRc);break;
-			case 2:  CreateProReturn(m_TabRc);break;
+			case 0:  CreateProOrder(m_TabRc);
+		lsNameNumber = proOrder;break;
+			case 1:  CreateProTrack(m_TabRc);
+		lsNameNumber = proDetails;break;
+			case 2:  CreateProReturn(m_TabRc);
+		lsNameNumber = proReturn;break;
 			//case 3:  CreateProIntel(m_TabRc);break;
 
-			case 4:  CreateDistriLs(m_TabRc);break;
-			case 5:  CreateDistriTrack(m_TabRc);break;
-			case 6:  CreateDistriReturn(m_TabRc);break;
+			case 4:  CreateDistriLs(m_TabRc);
+		lsNameNumber = distriOrder;break;
+			case 5:  CreateDistriTrack(m_TabRc);
+		lsNameNumber = distriDetails;break;
+			case 6:  CreateDistriReturn(m_TabRc);
+		lsNameNumber = distriReturn;break;
 
-			case 7:  CreateWareIn(m_TabRc);break;
-			case 8:  CreateWareOut(m_TabRc);break;
-			case 9:  CreateWareStock(m_TabRc);break;
-			case 10:  CreateWareChng(m_TabRc);break;
+			case 7:  CreateWareIn(m_TabRc);
+		lsNameNumber = wareIn;break;
+			case 8:  CreateWareOut(m_TabRc);
+		lsNameNumber = wareOut;break;
+			case 9:  CreateWareStock(m_TabRc);
+		lsNameNumber = wareStock;break;
+			case 10:  CreateWareChng(m_TabRc);
+		lsNameNumber = wareAdjust;break;
 
 			case 11:  CreateManaCus(m_TabRc);break;
 			case 12:  CreateManaSup(m_TabRc);break;
@@ -553,12 +515,18 @@ void CExternParent::OnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 			case 14:  CreateManaGoods(m_TabRc);break;
 			case 15:  CreateManaWare(m_TabRc);break;
 
-			case 16:  CreateDataVoucher(m_TabRc);break;
-			case 17:  CreateDataPayment(m_TabRc);break;
-			case 18:  CreateDataReceivable(m_TabRc);break;
-			case 19:  CreateDataPayable(m_TabRc);break;
-			case 20:  CreateDataOtherIncome(m_TabRc);break;
-			case 21:  CreateDataOtherExpend(m_TabRc);break;
+			case 16:  CreateDataVoucher(m_TabRc);
+		lsNameNumber = dataRecv;break;
+			case 17:  CreateDataPayment(m_TabRc);
+		lsNameNumber = dataPay;break;
+			case 18:  CreateDataReceivable(m_TabRc);
+		lsNameNumber = dataRecable;break;
+			case 19:  CreateDataPayable(m_TabRc);
+		lsNameNumber = dataPayable;break;
+			case 20:  CreateDataOtherIncome(m_TabRc);
+		lsNameNumber = dataOtherIn;break;
+			case 21:  CreateDataOtherExpend(m_TabRc);
+		lsNameNumber = dataOtherOut;break;
 
 			case 22:  CreateSetLog(m_TabRc);
 
@@ -802,11 +770,15 @@ void CExternParent::DealMessage(WPARAM wParam,LPARAM lParam)
 // create control in tabdlg !just do it!
 	int pos;
 //	CString str;
-	
+	isDesc = false;
+	searchString = "";
+	lsHeadNumber = -1;
+
 	switch(wParam)
 	{
 	
 	case 0:  
+		lsNameNumber = proOrder;
 		//判断窗口是否第一次打开，count是否为-1
 		//如果是：SetFocus不会响应，要手动创建窗口并ShowWindow，且不用销毁上一个窗口，还要在iDialog中插入自己的ID
 		//也要在page中插入自己的string
@@ -839,18 +811,28 @@ void CExternParent::DealMessage(WPARAM wParam,LPARAM lParam)
 
 		}
 		thisPos = 0;break;
-		case 1:if(count == -1){iDialog.Add(wParam);CreateProTrack(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =1;break;
-		case 2:if(count == -1){iDialog.Add(wParam);CreateProReturn(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =2;break;
+		case 1:
+		lsNameNumber = proDetails;
+		if(count == -1){iDialog.Add(wParam);CreateProTrack(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =1;break;
+		case 2:
+		lsNameNumber = proReturn;if(count == -1){iDialog.Add(wParam);CreateProReturn(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =2;break;
 //		case 3:if(count == -1){iDialog.Add(wParam);CreateProIntel(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =3;break;
 
-		case 4:if(count == -1){iDialog.Add(wParam);CreateDistriLs(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =4;break;
-		case 5:if(count == -1){iDialog.Add(wParam);CreateDistriTrack(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =5;break;
-		case 6:if(count == -1){iDialog.Add(wParam);CreateDistriReturn(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =6;break;
+		case 4:
+		lsNameNumber = distriOrder;if(count == -1){iDialog.Add(wParam);CreateDistriLs(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =4;break;
+		case 5:
+		lsNameNumber = distriDetails;if(count == -1){iDialog.Add(wParam);CreateDistriTrack(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =5;break;
+		case 6:
+		lsNameNumber = distriReturn;if(count == -1){iDialog.Add(wParam);CreateDistriReturn(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =6;break;
 
-		case 7:if(count == -1){iDialog.Add(wParam);CreateWareIn(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =7;break;
-		case 8:if(count == -1){iDialog.Add(wParam);CreateWareOut(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =8;break;
-		case 9:if(count == -1){iDialog.Add(wParam);CreateWareStock(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =9;break;
-		case 10:if(count == -1){iDialog.Add(wParam);CreateWareChng(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =10;break;
+		case 7:
+		lsNameNumber = wareIn;if(count == -1){iDialog.Add(wParam);CreateWareIn(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =7;break;
+		case 8:
+		lsNameNumber = wareOut;if(count == -1){iDialog.Add(wParam);CreateWareOut(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =8;break;
+		case 9:
+		lsNameNumber = wareStock;if(count == -1){iDialog.Add(wParam);CreateWareStock(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =9;break;
+		case 10:
+		lsNameNumber = wareAdjust;if(count == -1){iDialog.Add(wParam);CreateWareChng(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =10;break;
 
 		case 11:if(count == -1){iDialog.Add(wParam);CreateManaCus(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =11;break;
 		case 12:if(count == -1){iDialog.Add(wParam);CreateManaSup(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =12;break;
@@ -858,12 +840,18 @@ void CExternParent::DealMessage(WPARAM wParam,LPARAM lParam)
 		case 14:if(count == -1){iDialog.Add(wParam);CreateManaGoods(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =14;break;
 		case 15:if(count == -1){iDialog.Add(wParam);CreateManaWare(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =15;break;
 
-		case 16:if(count == -1){iDialog.Add(wParam);CreateDataVoucher(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =16;break;
-		case 17:if(count == -1){iDialog.Add(wParam);CreateDataPayment(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =17;break;
-		case 18:if(count == -1){iDialog.Add(wParam);CreateDataReceivable(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =18;break;
-		case 19:if(count == -1){iDialog.Add(wParam);CreateDataPayable(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =19;break;
-		case 20:if(count == -1){iDialog.Add(wParam);CreateDataOtherIncome(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =20;break;
-		case 21:if(count == -1){iDialog.Add(wParam);CreateDataOtherExpend(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =21;break;
+		case 16:
+		lsNameNumber = dataRecv;if(count == -1){iDialog.Add(wParam);CreateDataVoucher(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =16;break;
+		case 17:
+		lsNameNumber = dataPay;if(count == -1){iDialog.Add(wParam);CreateDataPayment(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =17;break;
+		case 18:
+		lsNameNumber = dataRecable;if(count == -1){iDialog.Add(wParam);CreateDataReceivable(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =18;break;
+		case 19:
+		lsNameNumber = dataPayable;if(count == -1){iDialog.Add(wParam);CreateDataPayable(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =19;break;
+		case 20:
+		lsNameNumber = dataOtherIn;if(count == -1){iDialog.Add(wParam);CreateDataOtherIncome(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =20;break;
+		case 21:
+		lsNameNumber = dataOtherOut;if(count == -1){iDialog.Add(wParam);CreateDataOtherExpend(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =21;break;
 
 		case 22:if(count == -1){iDialog.Add(wParam);CreateSetLog(m_TabRc);m_Tab.InsertItem(++count,*str);}else{pos = GetDlgPos(wParam);if(pos == -1){m_Tab.InsertItem(++count,*str);iDialog.Add(wParam);m_Tab.SetCurFocus(count);}else{m_Tab.SetCurFocus(pos);}}thisPos =22;break;
 	}
@@ -901,7 +889,7 @@ void CExternParent::CreateDataPayment(CRect rc)
 	DB_selectTitle(db_ls,CompetLs,m_ls,"dataPayment");
 	tbName = "dataPayment";
 
-	char sql[] = "select 供应商编号 from manaSup where 状态 != '不可用'";
+	char sql[] = "select 供应商名称 from manaSup where 状态 != '不可用'";
 	opt = 0;
 	DB_excute(db_ls,sql,InsertComboBox,this);
 }
@@ -913,7 +901,7 @@ void CExternParent::CreateDataVoucher(CRect rc)
 	DB_selectTitle(db_ls,CompetLs,m_ls,"dataVoucher");
 	tbName = "dataVoucher";
 	
-	char sql[] = "select 客户编号 from manaCus where 状态 != '不可用'";
+	char sql[] = "select 客户名称 from manaCus where 状态 != '不可用'";
 	opt = 0;
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
@@ -926,7 +914,7 @@ void CExternParent::CreateDistriLs(CRect rc)
 	DB_selectTitle(db_ls,CompetLs,m_ls,"distriLs");
 	tbName = "distriTrack";
 	opt = 0;
-	char sql[] = "select 商品编号 from inventory where 状态 != '不可用'";
+	char sql[] = "select 商品名称 from inventory where 状态 != '不可用'";
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
 }
@@ -939,7 +927,7 @@ void CExternParent::CreateDistriTrack(CRect rc)
 	DB_selectTitle(db_ls,CompetLs,m_ls,"distriTrack");
 	tbName = "distriTrack";
 	opt = 0;
-	char sql[] = "select 客户编号 from manaCus where 状态 != '不可用'";
+	char sql[] = "select 客户名称 from manaCus where 状态 != '不可用'";
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
 }
@@ -1005,7 +993,7 @@ void CExternParent::CreateProOrder(CRect rc)
 	tbName = "proTrack";
 	
 	opt = 0;
-	char sql[] = "select 商品编号 from inventory where 状态 != '不可用'";
+	char sql[] = "select 商品名称 from inventory where 状态 != '不可用'";
 	DB_excute(db_ls,sql,InsertComboBox,this);
 }
 
@@ -1017,7 +1005,7 @@ void CExternParent::CreateProReturn(CRect rc)
 	DB_selectTitle(db_ls,CompetLs,m_ls,"proReturn");
 	tbName = "proReturn";
 	opt = 0;
-	char sql[] = "select 供应商编号 from manaSup where 状态 != '不可用'";
+	char sql[] = "select 供应商名称 from manaSup where 状态 != '不可用'";
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
 }
@@ -1028,7 +1016,7 @@ void CExternParent::CreateProTrack(CRect rc)
 	DB_select(db,CreateCtrl,this,"proTrack");
 	DB_selectTitle(db_ls,CompetLs,m_ls,"proTrack");
 	tbName = "proTrack";
-	char sql[] = "select 供应商编号 from manaSup where 状态 != '不可用'";
+	char sql[] = "select 供应商名称 from manaSup where 状态 != '不可用'";
 	opt = 0;
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
@@ -1220,11 +1208,13 @@ void CExternParent::CreateCb(CString strText, CRect rc)
 //		iCtrl[cb]++;
 //	}
 //	uCtrl.Add(cbID+iTemp[cb]);
+	m_cb[iTemp[cb]].SetFont(m_font);
 	m_cb[iTemp[cb]].ShowWindow(true);
 //	m_cb[iTemp[cb]]
 //  m_cb[iTemp[cb]].SetFont(&m_font);
 //	m_tx[iTemp[tx] - 1].GetWindowText(strCb[iTemp[cb]]);
 //	MessageBox(strCb[iTemp[cb]],0);
+	m_cb[iTemp[cb]].InsertString(0,"——all——");
 	iTemp[cb]++;
 }
 
@@ -1239,6 +1229,7 @@ void CExternParent::CreateTm(CString strText, CRect rc)
 //		iCtrl[tm]++;
 //	}
 //	uCtrl.Add(tmID+iTemp[tm]);
+//	m_tm[iTemp[tm]].SetFont(m_font);
 	m_tm[iTemp[tm]].ShowWindow(true);
 //	m_tm[iTemp[tm]].SetFont(&m_font);
 
@@ -1432,8 +1423,6 @@ int CExternParent::Show(int i)
 	case 0:
 		while(m_ed[sta].m_hWnd != 0)
 		{
-//			MessageBox("0",MB_OK);
-//			m_ed[sta].ShowWindow(false);
 			m_ed[sta].DestroyWindow();
 			m_ed[sta].m_hWnd = NULL;
 			sta++;
@@ -1442,9 +1431,6 @@ int CExternParent::Show(int i)
 	case 1:
 		while(m_cb[sta].m_hWnd != 0)
 		{
-	//		MessageBox("1",MB_OK);
-	//		m_cb[sta].ShowWindow(false);
-//			strCb[sta] = "";
 			m_cb[sta].DestroyWindow();
 			m_cb[sta].m_hWnd = 0;
 			sta++;
@@ -1454,8 +1440,6 @@ int CExternParent::Show(int i)
 	case 2:
 		while(m_bt[sta].m_hWnd != 0)
 		{
-//			MessageBox("2",MB_OK);
-//			m_bt[sta].ShowWindow(false);
 			m_bt[sta].DestroyWindow();
 			m_bt[sta].m_hWnd = 0;
 			sta++;
@@ -1465,8 +1449,6 @@ int CExternParent::Show(int i)
 	case 3:
 		while(m_tx[sta].m_hWnd != 0)
 		{
-//			MessageBox("3",MB_OK);
-//			m_tx[sta].ShowWindow(false);
 			m_tx[sta].DestroyWindow();
 			m_tx[sta].m_hWnd = 0;
 			sta++;
@@ -1476,8 +1458,6 @@ int CExternParent::Show(int i)
 	case 4:
 		while(m_tm[sta].m_hWnd != 0)
 		{
-//			MessageBox("4",MB_OK);
-//			m_tm[sta].ShowWindow(false);
 			m_tm[sta].DestroyWindow();
 			m_tm[sta].m_hWnd = 0;
 			sta++;
@@ -1487,8 +1467,6 @@ int CExternParent::Show(int i)
 	case 5:
 		while(m_ls[sta].m_hWnd != 0)
 		{
-//			MessageBox("5",MB_OK);
-//			m_ls[sta].ShowWindow(false);
 			m_ls[sta].DestroyWindow();
 			m_ls[sta].m_hWnd = 0;
 			sta++;
@@ -1504,11 +1482,6 @@ HBRUSH CExternParent::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 	
-	// TODO: Change any attributes of the DC here
-
-//
-//	pDC->SelectObject(m_font);
-	// TODO: Return a different brush if the default is not desired
 	return hbr;
 }
 
@@ -1557,263 +1530,85 @@ CString CExternParent::GetLsHeadText(int i,CListCtrl *src)
 	lvcolumn.pszText = str;
 	lvcolumn.cchTextMax = 50;
 	src->GetColumn(i,&lvcolumn);
-//	MessageBox(str,0);
 	return str;
 }
-//
-//typedef struct PRINTINFO{
-//	HDC			hDC;
-//	CListCtrl  *pList;
-//	int			iWidth;
-//	int			iHeight;
-//	int			iItem;
-//	int			iColumn;
-//}PRINTINFO,*pPRINTINFO;
-
-//DWORD CALLBACK PrintLs(LPVOID lpParam)
-//{
-//
-//	return 0L;
-//}
-
-//DEL void CExternParent::PrintList()
-//DEL {
-//DEL 	CPrintDialog m_print(false);
-//DEL 	if(m_print.DoModal() == IDOK)
-//DEL 	{
-//DEL 		int Copies  = m_print.GetCopies();   //获取需要打印多少份
-//DEL 		HDC hDC	    = m_print.GetPrinterDC();
-//DEL 		
-//DEL 	//	CFont *font = m_ls->GetFont();
-//DEL 	//	SelectObject(hDC,&font);
-//DEL 		
-//DEL 
-//DEL 		int PixX   = GetDeviceCaps(hDC,LOGPIXELSX);
-//DEL 		int PixY   = GetDeviceCaps(hDC,LOGPIXELSY);
-//DEL //默认A4纸，纵向，210 x 297,x - 10; y - 17;实际宽度  200 x 280;
-//DEL 
-//DEL 		//		字号 	毫米 
-//DEL 		//		七号 	1.84
-//DEL 		//		小六号 	2.46
-//DEL 		//		六号 	2.8
-//DEL 		//		小五号 	3.15
-//DEL 		//		五号 	3.67
-//DEL 		//		小四号 	4.2
-//DEL 		//		四号 	4.81
-//DEL 		//		三号 	5.62
-//DEL 		//		小二号 	6.36
-//DEL 		//		二号 	7.35
-//DEL 		//		小一号 	8.5
-//DEL 		//		一号 	9.63
-//DEL 		//		小初号 	12.6
-//DEL 		//		初号 	14.7
-//DEL 
-//DEL 		
-//DEL 		int XScale = PixX * 10 / 254 * 4;
-//DEL 		int YScale = PixY * 10 / 254 * 4;
-//DEL 
-//DEL //		LPDEVMODE	pDevmode = m_print.GetDevMode();
-//DEL 		
-//DEL 		int item   = m_ls->GetItemCount();
-//DEL 		int column = m_ls->GetHeaderCtrl()->GetItemCount();
-//DEL 			
-//DEL //		PRINTINFO pInfo;
-//DEL //		pInfo.hDC		= hDC;
-//DEL //		pInfo.iItem		= item;
-//DEL //		pInfo.iColumn	= column;
-//DEL //		pInfo.iWidth	= PageX;
-//DEL //		pInfo.iHeight	= PageY;
-//DEL //		pInfo.pList		= m_ls;
-//DEL 
-//DEL //		HANDLE	hThread = CreateThread( 0,0,PrintLs,&pInfo,0,0);
-//DEL //		CloseHandle(hThread);
-//DEL 		DOCINFO   doc;
-//DEL 
-//DEL 		memset(&doc,0,sizeof(doc));
-//DEL 		doc.cbSize = sizeof(doc);
-//DEL 		doc.lpszDocName = "CDC::StartDoc";
-//DEL 
-//DEL //		pPRINTINFO	pInfo = (pPRINTINFO)	lpParam;
-//DEL 		CDC *pDC = NULL;
-//DEL 		pDC->Attach(hDC);
-//DEL 		CFont *font;
-//DEL 		font->CreateFont(
-//DEL 			 160,				    	//height
-//DEL 			 80,							//wiidth
-//DEL 			 0,
-//DEL 			 0,							
-//DEL 			 FW_NORMAL,					 // nWeight    
-//DEL 			 FALSE,                      // bItalic    斜体？
-//DEL 			 FALSE,                     // bUnderline    
-//DEL 			 0,                         // cStrikeOut    
-//DEL 			 ANSI_CHARSET,              // nCharSet    
-//DEL 			 OUT_DEFAULT_PRECIS,        // nOutPrecision    
-//DEL 			 CLIP_DEFAULT_PRECIS,       // nClipPrecision    
-//DEL 			 DEFAULT_QUALITY,           // nQuality    
-//DEL 			 DEFAULT_PITCH,				// nPitchAndFamily    
-//DEL 			 "宋体"); 
-//DEL 		pDC->SelectObject(font);
-//DEL 
-//DEL 		if(pDC->StartDoc(&doc) < 0)
-//DEL 		{
-//DEL 			MessageBox("打印机出现错误","err",MB_ICONHAND);
-//DEL 			return;
-//DEL 		}
-//DEL 		else
-//DEL 		{
-//DEL 			//画表格，就像在view视图中那样画
-//DEL 			
-//DEL 			pDC->TextOut(1 * XScale,1 * YScale,"小蘑菇供应商库存管理系统",strlen("小蘑菇供应商库存管理系统"));
-//DEL //			TextOut(hDC,1 * XScale,1 * YScale,"小蘑菇供应商库存管理系统",strlen("小蘑菇供应商库存管理系统"));
-//DEL //			TextOut(hDC,30 * XScale,5 * YScale,PageName,PageName.GetLength());
-//DEL //	
-//DEL 
-//DEL //			m_Tab.GetWindowText(str);
-//DEL //			TextOut(hDC,PageX,100,str,str.GetLength());
-//DEL 		}
-//DEL 		
-//DEL 		EndPage(hDC);
-//DEL 		EndDoc(hDC);
-//DEL 
-//DEL 	}
-//DEL 		
-//DEL }
-
-
 
 void CExternParent::PutOut()
 {
-	//http://www.cnblogs.com/wlsandwho/p/4512840.html
-	//内嵌Excel in single document interface
-/*	_Application app;  //Excel应用程序接口
-
-    _Workbook book;
-    Workbooks books;
-
-	_Worksheet sheet;
-    Worksheets sheets;
-
-    Range range;
- 	Font font;
- 	Range cols;
-//    CString tem,stri,strA,strB;
-
-//	CoInitialize(NULL);
-    COleVariant covOptional((long)DISP_E_PARAMNOTFOUND,VT_ERROR);
-    if (!app.CreateDispatch(_T("Excel.Application")))
-    {
-           this->MessageBox(_T("无法创建Excel应用！"));
-           return;
-    }
-
-    books = app.GetWorkbooks();    //获取工作薄集合
-    book = books.Add(covOptional);  //添加一个工作薄
-
-    sheets = book.GetWorksheets();    //获取工作表集合
-    sheet = sheets.GetItem(COleVariant((short)1));        //获取第一个工作表
-
-/////////////////////////第一列/////////////////////////////////////////////////
-
-    //设置列名
-
-//    range = sheet.GetRange(COleVariant(_T("A1")),  COleVariant(_T("A1")));    //选择工作表中A1:A1单元格区域
-//
-////    range.SetValue2(COleVariant(_T("序号")));   //A1:A1中填入“序号”
-//
-//           //设置字体为粗体
-//
-//    font = range.GetFont();
-//
-//    font.SetBold(COleVariant((short)TRUE));
-
-    //写入数据
-
-  //  arr1.RemoveAll();    //清空数组（用数组存该列的所有数据）
-
- //   int line=m_ls.GetItemCount();    //查询clistctrl控件中记录数
-
-  //  CString str_line;
-
-  //  str_line.Format("%d",line+1);   
-
-//    for(int i=0;i < m_ls.GetItemCount();i++)
-//
-//    {
-//
-//        tem=m_ls.GetItemText(i,0);
-//		arr1.Add(tem); 
-//
-//    }
-
-//    for(i=1;i<=line;i++)          //循环将数组的内容写到Excel中
-//    {
-//           stri.Format("%d",i+1);
-//           strA="A"+stri;
-//           strB="A"+str_line; 
-//           range = sheet.GetRange(COleVariant(_T(strA)),  COleVariant(_T(strB)));        //确定表的范围
-//           range.SetValue2(COleVariant(_T(arr1[i-1])));
-//    }
-
-     //选择整列，并设置宽度为自适应
-
-	int item = m_ls->GetItemCount();
-	int column = m_ls->GetHeaderCtrl()->GetItemCount();
-	CString str;
-	
-	//		  A       B        C       D       E       F       G
-	// 1	************************XXXX表*************************   //暂时不能实现，merge报错
-	// 2	title1   title2  title3  title4  title5  title6  title7
-	// 3	  x			x		x		x		x		x		x
-
-//	str.Format("%c1",'A'+column - 1); //column = 6
-	range = sheet.GetRange(COleVariant("A1"),COleVariant("A6")); 
- 	range.Merge(COleVariant((short)1));//SetMergeCells
-//	
-//	range.SetValue2(COleVariant(PageName));
-//
-//	font = range.GetFont();
-//	font.SetBold(COleVariant((short)TRUE));
-//	font.SetSize(COleVariant((short)15));
-
-	char strHead[50];
-//	memset(str,0,sizeof(str)*50);
-	LVCOLUMN lvcolumn;
-	lvcolumn.mask = LVCF_TEXT;
-	lvcolumn.pszText = strHead;
-	lvcolumn.cchTextMax = 50;
-
-
-	for(int i = 0;i < column;i++)
+	if(m_ls->GetItemCount() == 0)
+		return;
+	COPYDATA pcd;
+	LX_RETURN_VALUE rv;
+    rv = csm.CreateSharedMemory(1024);
+	if(rv >1)
 	{
-		m_ls->GetColumn(i,&lvcolumn);
-		if(i == 0)
-			range = sheet.GetRange(COleVariant("A1"),COleVariant("A1"));
-		else 
-			range = range.GetNext();
-		
-		range.SetValue2(COleVariant(strHead));
+		return;
 	}
-	for(int iIndex = 0;iIndex < item; iIndex++)
-	{
-		str.Format("A%d",iIndex+2);
-		range = sheet.GetRange(COleVariant(str),COleVariant(str));
-		range.SetValue2(COleVariant(m_ls->GetItemText(iIndex,0)));
+	strcpy(pcd.compName,CompanyName);//没有值
+	strcpy(pcd.printer,UserName);
+	CString tmp[4];
 	
-		for(int jIndex = 1;jIndex < column;jIndex++)
+	strcpy(pcd.dateTime,"");
+	strcpy(pcd.object,"");
+	pcd.listName = lsNameNumber;
+	int i = 0;
+	while(m_tx[i].m_hWnd != NULL)
+	{
+		m_tx[i].GetWindowText(tmp[0]);
+		if(tmp[0].Right(4) == "日期")
 		{
-			range = range.GetNext();
-			range.SetValue2(COleVariant(m_ls->GetItemText(iIndex,jIndex)));
+			m_tm[0].GetWindowText(tmp[1]);
+			m_tm[1].GetWindowText(tmp[2]);
+			tmp[3].Format(" where %s Between '%s 00:00:00' and '%s 24:00:00'",tmp[0],tmp[1],tmp[2]);
+			strcpy(pcd.dateTime,tmp[3].GetBuffer(0));
+			tmp[3].ReleaseBuffer();
+			tmp[3] = "";
 		}
+		else if(tmp[0].Right(4) == "名称" || tmp[0].Right(4) == "编号")
+		{
+			int itmp = i;
+			if(strlen(pcd.dateTime) != 0)
+				itmp = itmp - 2;
+			m_cb[itmp].GetWindowText(tmp[1]);
+			if(tmp[1] != "" && tmp[1] != "——all——")
+			{
+				if(tmp[3].GetLength() != 0)
+				{
+					tmp[3] = tmp[3] + " and "; 
+				}
+				tmp[3] = tmp[3] + tmp[0] + " = '" + tmp[1] + "'";
+				strcpy(pcd.object,tmp[3].GetBuffer(0));
+				tmp[3].ReleaseBuffer(0);
+			}
+		
+		}
+		i++;
 	}
 
-    cols = range.GetEntireColumn();
-    cols.AutoFit();
+	CFileDialog dlg(false,NULL,NULL,OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"PDF文件(*.pdf)|*.pdf||",AfxGetMainWnd());
+	CString path;
+	if(dlg.DoModal() == IDOK)
+	{
+		path = dlg.GetPathName();
+		path+=".pdf";
+		strcpy(pcd.fileName,path);
+		rv = csm.WriteToSharedMemory(&pcd,sizeof(COPYDATA));
+		if(rv > 2)
+		{
+			return;
+		}
+		char tPath[MAX_PATH];
+		::GetModuleFileName(NULL,tPath,MAX_PATH);//总是桌面？
 	
-//后面几列处理方法相同，省略。
-
-    app.SetVisible(TRUE);  //显示表格
-	app.SetUserControl(TRUE);
-*/
+		CString director;
+		CString exeName = "WMPrinter.exe";
+		director.Format("%s", tPath);
+		director = director.Left(strlen(tPath) - 7);
+		CString FileName = director + exeName;
+		ShellExecute(NULL,"open",FileName.GetBuffer(0),NULL,director.GetBuffer(0),SW_HIDE);
+		FileName.ReleaseBuffer();
+		director.ReleaseBuffer();
+	}
 
 }
 int FillLs(void* data,int argv,char **argc,char **azCol)
@@ -1848,6 +1643,44 @@ int FillLs(void* data,int argv,char **argc,char **azCol)
 
 
 	return false;
+}
+void CExternParent::OnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	// TODO: Add your control notification handler code here
+
+	if(m_ls->GetItemCount() > 1)
+	{
+		//获取表头
+		CString head = GetLsHeadText(pNMListView->iSubItem,m_ls);
+		CString tmpSql = searchString;
+		while(m_ls->DeleteItem(0));
+		if(lsHeadNumber == pNMListView->iSubItem)
+		{
+			if(isDesc)
+			{
+				//升序
+				tmpSql = tmpSql + " order by " + head + " asc";
+				isDesc = false;
+			}
+			else
+			{
+				//降序
+				tmpSql = tmpSql + " order by " + head + " desc";
+				isDesc = true;
+			}
+			
+		}
+		else
+		{
+			tmpSql = tmpSql + " order by " + head + " desc";
+			isDesc = true;
+		}
+		lsHeadNumber = pNMListView->iSubItem;
+		opt = InsertLs;
+		DB_excute(db_ls,tmpSql,FillLs,this);
+	}
+//	*pResult = 0;
 }
 void CExternParent::Query()
 {
@@ -1890,7 +1723,10 @@ void CExternParent::Query()
 			CString charac = "";
 			m_cb[cbNumber].GetWindowText(charac);
 			if(!charac.IsEmpty())
-				condition.Format("%s %s = '%s' and ",tmp,str,charac);
+			{
+				if(charac != "——all——")
+					condition.Format("%s %s = '%s' and ",tmp,str,charac);
+			}
 			cbNumber++;
 		}
 		i++;
@@ -1924,28 +1760,30 @@ void CExternParent::Query()
 	/**金额总计**/
 	if(bNeedCount)
 	{
-		if(tbName == "dataPayment" )
+		if(m_ls->GetItemCount()>0)
 		{
-			searchString = "select sum(付款金额) from " + tbName + " " + condition; 
-		}
-		else if(tbName == "dataVoucher")
-		{
-			searchString = "select sum(收款金额) from " + tbName + " " + condition; 
-		}
-		else if(tbName == "distriReturn" || tbName == "proReturn")
-		{
-			searchString = "select sum(退货金额) from " + tbName + " " + condition; 
-		}
-		
-		else
-			searchString = "select sum(金额总计) from " + tbName + " " + condition;
-		opt = GetNum;
-		DB_excute(db_ls,searchString,FillLs,this);
-
-		if(result.Right(1) != "?")
+			if(tbName == "dataPayment" )
+			{
+				searchMoney = "select sum(付款金额) from " + tbName + " " + condition; 
+			}
+			else if(tbName == "dataVoucher")
+			{
+				searchMoney = "select sum(收款金额) from " + tbName + " " + condition; 
+			}
+			else if(tbName == "distriReturn" || tbName == "proReturn")
+			{
+				searchMoney = "select sum(退货金额) from " + tbName + " " + condition; 
+			}
+			
+			else
+				searchMoney = "select sum(金额总计) from " + tbName + " " + condition;
+			opt = GetNum;
+			DB_excute(db_ls,searchMoney,FillLs,this);
 			result = "金额总计：" + result;
+		}
 		else
 			result = "金额总计：0";
+		
 		m_tx[i-1].SetWindowText(result);
 	}
 }
@@ -1957,7 +1795,7 @@ void CExternParent::CreateDistriReturn(CRect rc)
 	tbName = "distriReturn";
 
 	opt = 0;
-	char sql[] = "select 客户编号 from manaCus where 状态 != '不可用'";
+	char sql[] = "select 客户名称 from manaCus where 状态 != '不可用'";
 	DB_excute(db_ls,sql,InsertComboBox,this);
 }
 
@@ -1976,7 +1814,7 @@ void CExternParent::CreateDataReceivable(CRect rc)
 	DB_select(db,CreateCtrl,this,"dataReceivable");
 	DB_selectTitle(db_ls,CompetLs,m_ls,"dataReceivable");
 	tbName = "dataReceivable";
-	char sql[] = "select 客户编号 from manaCus where 状态 != '不可用'";
+	char sql[] = "select 客户名称 from manaCus where 状态 != '不可用'";
 	opt = 0;
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
@@ -1987,7 +1825,7 @@ void CExternParent::CreateDataPayable(CRect rc)
 	DB_select(db,CreateCtrl,this,"dataPayable");
 	DB_selectTitle(db_ls,CompetLs,m_ls,"dataPayable");
 	tbName = "dataPayable";
-	char sql[] = "select 供应商编号 from manaSup where 状态 != '不可用'";
+	char sql[] = "select 供应商名称 from manaSup where 状态 != '不可用'";
 	opt = 0;
 	DB_excute(db_ls,sql,InsertComboBox,this);
 
